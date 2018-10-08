@@ -10,15 +10,17 @@ Iteration 0:
 3.  Summary: Write a two-paragraph (max) summary of the main customer need and how the application meets it, including who the stakeholders are.
         3.1. Include links to the video - DONE - (Diptanil - I have taken the video interview)
         3.2  Include links to GitHub repo - DONE - (Diptanil - Created the github repo and will add all as collaborators)
-        3.3  Include links to Pivotal Tracker
+        3.3  Include links to Pivotal Tracker - DONE - (Mayank & Sambartika - www.pivotaltracker.com/ UserName: crowdm Password: Pass@1234)
         
 4.  User stories: Create at least 4 user stories on 3x5 cards. Submit photos of these.
+    (Mayank, Sambartika: 2 user stories for User module)
 
 5.  User interface: Create lo-fi UI mockups and storyboards for at least 4 user stories. Submit photos of these.
+    (Mayank, Sambartika: Shared photos on whatsapp for 2 user stories)
 
 6.  Pivotal Tracker: Create a free open-source public Pivotal Tracker project and enter the user stories. 
     Give access as “observers” to the instructor and TAs. (Pivotal tracker is free for 3 collaborators only. So one person has 
-    to manage that, and give access to Dr. Walker and TA)
+    to manage that, and give access to Dr. Walker and TA) - DONE - (Mayank & Sambartika)
     
 7.  Video: Produce a 2-minute video interview where customer describes the problem you will be solving and the application you will be building. - DONE -
     (Diptanil - I have taken the video interview)
