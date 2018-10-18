@@ -25,7 +25,7 @@ SECRET_KEY = '2eyj3nh53n+c01gkr#s9t4kq$r#uc6k6*tdu1rppt_j4dlwxj3'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '823017eb886440b68e431a9d07031dc7.vfs.cloud9.us-east-2.amazonaws.com']
 
 
 # Application definition
@@ -54,7 +54,7 @@ ROOT_URLCONF = 'CrowdMentor.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'CrowdMentor/views')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -118,3 +118,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
