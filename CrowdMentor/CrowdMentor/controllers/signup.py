@@ -7,7 +7,7 @@ from CrowdMentor.utilities.signUpForm import SignUpForm
 
 @login_required
 def home(request):
-    return render(request, 'base.html')
+    return render(request, 'home.html')
 
 
 def signup(request):
