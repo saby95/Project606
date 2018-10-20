@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>Welcome, {{ user.get_full_name }} <small>{{ user.username }}</small>!</h2>
-<a href="/tasks/">{{ 'View open tasks' }}</a>
-<a href="/tasks/claimed">{{ 'View claimed tasks' }}</a>
-<a href="/tasks/add_tasks">{{ 'Add task' }}</a>
-{% endblock %}
+    <h2>Welcome, {{ user.get_full_name }} <small>{{ user.username }}</small>!</h2>
+    <h3>User role: {{ profile }}</h3><br>
+    {% for key, value in dict_functs.items %}
+        <a href={{ key }}>{{ value }}</a></br>
+    {% endfor %}
 
+{% endblock %}

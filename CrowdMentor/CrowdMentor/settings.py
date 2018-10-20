@@ -39,8 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     #Task model
-    'tasks.apps.TasksConfig'
- #   'CrowdMentor',
+    'tasks.apps.TasksConfig',
+    #'CrowdMentor',
 ]
 
 MIDDLEWARE = [
