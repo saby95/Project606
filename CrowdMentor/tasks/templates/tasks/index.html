@@ -1,7 +1,7 @@
 {% if task_list %}
     <ul>
     {% for task in task_list %}
-        <li><a href="/tasks/{{ task.id }}/">{{ task.task_desc }}</a></li>
+        <li><a href="/tasks/{{ task.id }}/">{{ task.task_summary }}</a></li>
     {% endfor %}
     </ul>
 {% else %}

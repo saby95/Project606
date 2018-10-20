@@ -1,10 +1,16 @@
-{% if task_list %}
+{% if tuj_list %}
     <ul>
-    {% for task in task_list %}
-        <li>{{ task.task_desc }}</li>
+    {% for tuj in tuj_list %}
+        {% if tuj.answer is None %}
+               <li><a href="/tasks/claimed/{{ tuj.task_id.id }}/answer">{{ tuj.task_id}}</a></li>
+        {% else %}
+               <li>{{ tuj.task_id}}</li>
+        {% endif %}
     {% endfor %}
     </ul>
 {% else %}
     <p>No tasks are available.</p>
 {% endif %}
+
+
 <a href="/">{{ 'Back' }}</a>
