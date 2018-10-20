@@ -16,21 +16,20 @@ Including another URLconf
 #from django.conf.urls import url, include
 #from django.contrib import admin
 from django.contrib.auth import views as auth_views
-
 from CrowdMentor.controllers import signup as register
-
 from django.conf.urls import include, url
 from django.contrib import admin
+from CrowdMentor.controllers import userHome
 
 urlpatterns = [
     # Admin
     url(r'^admin/', admin.site.urls),
-    # path('', TemplateView.as_view(template_name='base.html'), name='base'),
 
     # Login and Registration
-    url(r'^$', register.home, name='home'),
+    url(r'^$', userHome.view, name='view'),
+    url(r'^home/$', userHome.view, name='view'),
     url(r'^login/$', auth_views.LoginView.as_view(template_name="login.html"), name='login'),
-    url(r'^logout/$', auth_views.LogoutView.as_view(), {'next_page': 'login'}, name='logout'),
+    url(r'^logout/$', auth_views.logout, {'next_page': '/'}, name='logout'),
     url(r'^signup/$', register.signup, name='signup'),
     # url(r'^account_activation_sent/$', register.account_activation_sent, name='account_activation_sent'),
     # url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
