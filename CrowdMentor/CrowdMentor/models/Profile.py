@@ -5,10 +5,15 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from CrowdMentor.utilities import UserRoles
+from decimal import Decimal
+
+from CrowdMentor.utilities.UserRoles import UserRoles
 
 
 class Profile(models.Model):
+    class Meta:
+        app_label = 'CrowdMentor'
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     birth_date = models.DateField(null=True)
     role = models.CharField(max_length=15, choices=[(tag, tag.value) for tag in UserRoles], default=UserRoles.WORKER)
@@ -18,7 +23,7 @@ class Profile(models.Model):
     fine = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal(0.00))
     total_salary = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal(0.00))
     audit_prob_user = models.DecimalField(max_digits=20, decimal_places=2, default=Decimal(0.00))
-    mentor_id = models.OneToOneField(User, on_delete=models.DO_NOTHING(), null=True)
+    mentor = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='mentor')
 
 
 @receiver(post_save, sender=User)
