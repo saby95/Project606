@@ -15,6 +15,10 @@ def index(request):
     return render(request, 'tasks/index.html', context)
 
 @login_required
+def add_tasks(request):
+    return render(request, 'tasks/add_task.html')
+
+@login_required
 def detail(request, task_id):
     try:
         task = ResearchTasks.objects.get(pk=task_id)
