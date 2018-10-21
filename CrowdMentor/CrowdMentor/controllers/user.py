@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from CrowdMentor.models import Profile
 from CrowdMentor.utilities.UserRoles import UserRoles
+from CrowdMentor.utilities.changeRolesForm import ChangeRolesForm
 
 # dict_roles= {'UserRoles.WORKER': 'worker', 'UserRoles.TASK_UPDATER': 'task_updater', 'UserRoles.AUDITOR': 'auditor',
 #              'UserRoles.ADMIN': 'admin', 'UserRoles.MENTOR': 'mentor'}
@@ -22,8 +23,14 @@ def view(request):
 @login_required
 def change_roles(request):
     if request.method == 'PUT':
-        # CHANGE these to actual user id and UserRole value from the request parameters
+        # Change the following values with parameters sent in request
         user = User.objects.get(username=request.user.username)
         user.profile.role = UserRoles.WORKER
         user.save()
-    return render(request, 'changeRoles.html')
+    users = User.objects.all()
+    user_dict=dict()
+    for usr in users:
+        prf = Profile.objects.get(user_id=usr.id)
+        user_dict[usr.id] = [usr.username, usr.email, prf.role]
+    form = ChangeRolesForm(request.POST, users=user_dict)
+    return render(request, 'changeRoles.html', {'form': form})
