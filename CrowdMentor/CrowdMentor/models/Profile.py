@@ -24,7 +24,8 @@ class Profile(models.Model):
     total_salary = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal(0.00))
     audit_prob_user = models.DecimalField(max_digits=20, decimal_places=2, default=Decimal(0.00))
     mentor = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='mentor')
-
+    def __str__(self):
+        return str(self.user)
 
 @receiver(post_save, sender=User)
 def update_user_profile(sender, instance, created, **kwargs):
