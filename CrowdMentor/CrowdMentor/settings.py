@@ -40,7 +40,7 @@ INSTALLED_APPS = [
 
     #Task model
     'tasks.apps.TasksConfig',
-    #'CrowdMentor',
+    'CrowdMentor',
 ]
 
 MIDDLEWARE = [

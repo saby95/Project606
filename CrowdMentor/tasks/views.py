@@ -7,6 +7,7 @@ from datetime import datetime
 from .models import ResearchTasks, TaskUserJunction
 from .forms import AddTaskForm, AnswerForm
 
+#Controller for View Open tasks
 @login_required
 def index(request):
     task_list = ResearchTasks.objects.all().exclude(num_workers = 0)
@@ -15,6 +16,7 @@ def index(request):
     }
     return render(request, 'tasks/index.html', context)
 
+#Controller for adding Tasks. If method is post submit form else show the form
 @login_required
 def add_tasks(request):
     if request.method == 'POST':
@@ -29,6 +31,7 @@ def add_tasks(request):
         form = AddTaskForm()
     return render(request, 'tasks/add_task.html', {'form': form})
 
+#Controller for showing details of task
 @login_required
 def detail(request, task_id):
     try:
@@ -37,6 +40,7 @@ def detail(request, task_id):
         raise Http404("Task does not exist")
     return render(request, 'tasks/detail.html', {'task': task})
 
+#Controller for adding Claiming Tasks
 @login_required
 def claim(request, task_id):
     user = User.objects.get(username=request.user.username)
@@ -52,6 +56,7 @@ def claim(request, task_id):
     task.save()
     return redirect('/tasks/')
 
+#Controller for adding Viewing Claimed Tasks
 @login_required
 def claimed_tasks(request):
     user = User.objects.get(username=request.user.username)
@@ -61,6 +66,7 @@ def claimed_tasks(request):
     }
     return render(request, 'tasks/claimed_task.html', context)
 
+#Controller for adding Answer. If method is post submit form else show the form
 @login_required
 def answer(request, task_id):
     task = ResearchTasks.objects.get(pk=task_id)
