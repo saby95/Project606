@@ -19,15 +19,15 @@ from django.contrib.auth import views as auth_views
 from CrowdMentor.controllers import signup as register
 from django.conf.urls import include, url
 from django.contrib import admin
-from CrowdMentor.controllers import userHome
+from CrowdMentor.controllers import user
 
 urlpatterns = [
     # Admin
     url(r'^admin/', admin.site.urls),
 
     # Login and Registration
-    url(r'^$', userHome.view, name='view'),
-    url(r'^home/$', userHome.view, name='view'),
+    url(r'^$', user.view, name='view'),
+    url(r'^home/$', user.view, name='view'),
     url(r'^login/$', auth_views.LoginView.as_view(template_name="login.html"), name='login'),
     url(r'^logout/$', auth_views.logout, {'next_page': '/'}, name='logout'),
     url(r'^signup/$', register.signup, name='signup'),
