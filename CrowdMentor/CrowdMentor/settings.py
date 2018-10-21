@@ -31,13 +31,13 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', '823017eb886440b68e431a9d07031dc7.vfs
 # Application definition
 
 INSTALLED_APPS = [
+    'behave_django',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'CrowdMentor',
 ]
 
