@@ -14,5 +14,10 @@ def view(request):
     dict_functs={'/tasks/': 'View open tasks', '/tasks/claimed': 'View claimed tasks'}
     if profile == 'task_updater' or profile == 'admin':
         dict_functs['/tasks/add_tasks']= 'Add task'
+        dict_functs['/change_roles'] = 'Change user roles'
 
     return render(request, 'home.html', {"profile": profile, "dict_functs" : dict_functs})
+
+@login_required
+def change_roles(request):
+    return render(request, 'changeRoles.html')
