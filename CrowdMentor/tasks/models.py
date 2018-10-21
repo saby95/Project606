@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.contrib.auth.models import User
 
+#Creating the table for Tasks
 @python_2_unicode_compatible  # only if you need to support Python 2
 class ResearchTasks(models.Model):
     task_type = models.CharField(max_length=10, blank = True, null=True)
@@ -15,7 +16,7 @@ class ResearchTasks(models.Model):
     def __str__(self):
         return self.task_summary
 
-
+#Creating the table for TasksUser junction
 @python_2_unicode_compatible
 class TaskUserJunction(models.Model):
     CONFIDENCE = (
