@@ -5,16 +5,13 @@ from CrowdMentor.models import Profile
 from CrowdMentor.utilities.UserRoles import UserRoles
 from CrowdMentor.utilities.changeRolesForm import ChangeRolesForm
 
-# dict_roles= {'UserRoles.WORKER': 'worker', 'UserRoles.TASK_UPDATER': 'task_updater', 'UserRoles.AUDITOR': 'auditor',
-#              'UserRoles.ADMIN': 'admin', 'UserRoles.MENTOR': 'mentor'}
-
 
 @login_required
 def view(request):
     user_id = User.objects.get(username=request.user.username).id
     profile = Profile.objects.get(user_id=user_id).role
     dict_functs={'/tasks/': 'View open tasks', '/tasks/claimed': 'View claimed tasks'}
-    if profile == UserRoles.TASK_UPDATER or profile == UserRoles.ADMIN:
+    if profile == UserRoles.TASK_UPDATER.value or profile == UserRoles.ADMIN.value:
         dict_functs['/tasks/add_tasks']= 'Add task'
         dict_functs['/change_roles'] = 'Change user roles'
 
@@ -22,15 +19,17 @@ def view(request):
 
 @login_required
 def change_roles(request):
-    if request.method == 'PUT':
-        # Change the following values with parameters sent in request
-        user = User.objects.get(username=request.user.username)
-        user.profile.role = UserRoles.WORKER
-        user.save()
     users = User.objects.all()
+    if request.method == 'POST':
+        for user in users:
+            id = 'role_'+str(user.id)
+            if 'Select' != request.POST.get(id):
+                user.profile.role = request.POST.get(id)
+                user.save()
+        return redirect('/')
     user_dict=dict()
     for usr in users:
         prf = Profile.objects.get(user_id=usr.id)
         user_dict[usr.id] = [usr.username, usr.email, prf.role]
-    form = ChangeRolesForm(request.POST, users=user_dict)
+    form = ChangeRolesForm(users=user_dict)
     return render(request, 'changeRoles.html', {'form': form})

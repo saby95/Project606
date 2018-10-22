@@ -1,12 +1,5 @@
 from django import forms
-
-MY_CHOICES = (
-    ('UserRoles.WORKER', 'worker'),
-    ('UserRoles.TASK_UPDATER', 'task_updater'),
-    ('UserRoles.AUDITOR', 'auditor'),
-    ('UserRoles.ADMIN', 'admin'),
-    ('UserRoles.MENTOR', 'mentor'),
-)
+import UserRoles
 
 class ChangeRolesForm(forms.Form):
     def __init__(self, *args, **kwargs):
@@ -16,6 +9,9 @@ class ChangeRolesForm(forms.Form):
         for key, value in self.users.iteritems():
             label= 'username:'+value[0]+' role:'
             help='email:'+value[1]
-            self.fields['role_'+str(key)] = forms.ChoiceField(choices=MY_CHOICES, label=label, required=False,help_text=help)
+            choices = [(tag.value, tag.value) for tag in UserRoles.UserRoles]
+            choices.insert(0, ('Select', 'Select'));
+            self.fields['role_'+str(key)] = forms.ChoiceField(choices=choices, label=label, required=False, help_text=help)
+            # self.fields['role_' + str(key)].initial = value[2]
 
 
