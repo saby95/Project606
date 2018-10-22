@@ -8,3 +8,6 @@ db.sqlite3
 *.idea/
 606/
 CrowdMentor/db.sqlite3
+node_modules/
+CrowdMentor/ghostdriver.log
+CrowdMentor/package-lock.json
