@@ -11,18 +11,12 @@ subtracts from it. The audits also help evaluate the workers' performance, which
 incentives being provided to the them. The goal is to build a system where the factors which affect worker performance can be studied
 comprehensively.
 
-
-Iteration 1 : Task Updater(TU) submits the task, Worker completes the task and earns salary.\\
-For the first iteration, we can have a simple question answering task where the worker must answer the question.
-
 ![](soa_architecture.png)
 
-Requirements(to be converted into user stories):
-1) TU must be able to login with privileged access.
-2) TU must be able to submit the task i.e the question to be answered.
-3) Worker must be be able to login.
-4) Worker must be able to locate and accept the task.
-5) Worker must be able to complete the task.
-6) Worker must earn a salary when he completes the task.
-7) Details about the task must be stored in the database.
-8) Worker's salary must be displayed in the dashboard.
+Iteration 1 : Task Updater(TU) submits the task, Worker completes the task and earns salary.\\
+For the first iteration, we have a simple question answering task where the worker must answer the question.
+
+Testing User Stories
+Like Cucumber, we have a package called behave which captures user requirements in plain English and maps them to test code written in Python. However, the Django framework does not provide a "Capybara" which acts as the user during testing. Instead, we are using a headless browser(a web browser without a GUI) and interacting with it using a webdriver which lets us simulate user actions like clicking buttons or following urls. The headless browser we are using is called PhantomJS and the webdriver is called Splinter, these along with behave are used to test the user stories.
+Also, we are using Factory Boy to create the data to be included the test database. For eg, the users are created in this way for testing the login feature of the website.
+
