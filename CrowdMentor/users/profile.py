@@ -15,7 +15,7 @@ class Profile(models.Model):
         app_label = 'users'
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    birth_date = models.DateField(null=True)
+    birth_date = models.DateField(null=True, blank=True)
     role = models.CharField(max_length=15, choices=[(tag.value, tag.value) for tag in UserRoles], default=UserRoles.WORKER.value)
     performance = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal(0.00))
     salary = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal(0.00))
@@ -23,7 +23,7 @@ class Profile(models.Model):
     fine = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal(0.00))
     total_salary = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal(0.00))
     audit_prob_user = models.DecimalField(max_digits=20, decimal_places=2, default=Decimal(0.00))
-    mentor = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='mentor')
+    mentor = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='mentor', blank=True)
     def __str__(self):
         return str(self.user)
 
