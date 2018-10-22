@@ -1,9 +1,11 @@
 from django import forms
 
 MY_CHOICES = (
-    ('1', 'Option 1'),
-    ('2', 'Option 2'),
-    ('3', 'Option 3'),
+    ('UserRoles.WORKER', 'worker'),
+    ('UserRoles.TASK_UPDATER', 'task_updater'),
+    ('UserRoles.AUDITOR', 'auditor'),
+    ('UserRoles.ADMIN', 'admin'),
+    ('UserRoles.MENTOR', 'mentor'),
 )
 
 class ChangeRolesForm(forms.Form):
