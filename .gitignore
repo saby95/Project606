@@ -3,3 +3,4 @@
 *.idea/
 *.sqlite3
 606/
+CrowdMentor/db.sqlite3
