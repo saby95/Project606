@@ -7,7 +7,7 @@ class ChangeRolesForm(forms.Form):
         super(ChangeRolesForm, self).__init__(*args, **kwargs)
 
         for key, value in self.users.iteritems():
-            label= 'username:'+value[0]+' role:'
+            label= ''
             help='email:'+value[1]
             choices = [(tag.value, tag.value) for tag in UserRoles.UserRoles]
             choices.insert(0, ('Select', 'Select'));

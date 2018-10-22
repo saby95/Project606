@@ -1,11 +1,25 @@
 {% extends 'base.html' %}
-
 {% block content %}
     <h2>Welcome, admin!</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit">Update</button>
-    </form>
+    <div style="width:30%">
+        <div style="float:left">
+            <div style="float:left; width:33%; height:32px">Userid</div>
+            <div style="float:right; width:33%; height:32px">User role</div>
+            <div style="float:right; width:33%; height:32px"> Email</div><br>
+            {% for key, value in user_dict.items %}
+            <div style="float:left; width:33%; height:35px">{{ value.0 }} </div>
+            <div style="float:left; width:33%; height:35px">{{ value.2 }} </div>
+            <div style="float:right; width:33%; height:35px"> {{ value.1 }}</div><br>
+            {% endfor %}
+        </div>
+        <div style="float:right; height:25px">
+            <div style="float:left; width:70%; height:32px">New role</div>
+            <form method="post">
+                {% csrf_token %}
+                {{form.as_p}}
+                <button type="submit">Update</button>
+            </form>
+        </div>
+    </div>
 
 {% endblock %}
