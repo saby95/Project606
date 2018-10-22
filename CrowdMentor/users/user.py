@@ -1,9 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from CrowdMentor.models import Profile
-from CrowdMentor.utilities.UserRoles import UserRoles
-from CrowdMentor.utilities.changeRolesForm import ChangeRolesForm
+from profile import Profile
+from UserRoles import UserRoles
+from changeRolesForm import ChangeRolesForm
 
 
 @login_required

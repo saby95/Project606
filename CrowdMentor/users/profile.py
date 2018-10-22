@@ -7,12 +7,12 @@ from django.dispatch import receiver
 
 from decimal import Decimal
 
-from CrowdMentor.utilities.UserRoles import UserRoles
+from UserRoles import UserRoles
 
 
 class Profile(models.Model):
     class Meta:
-        app_label = 'CrowdMentor'
+        app_label = 'users'
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     birth_date = models.DateField(null=True)
