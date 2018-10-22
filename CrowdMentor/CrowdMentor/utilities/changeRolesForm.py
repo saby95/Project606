@@ -11,7 +11,7 @@ class ChangeRolesForm(forms.Form):
             help='email:'+value[1]
             choices = [(tag.value, tag.value) for tag in UserRoles.UserRoles]
             choices.insert(0, ('Select', 'Select'));
-            self.fields['role_'+str(key)] = forms.ChoiceField(choices=choices, label=label, required=False, help_text=help)
+            self.fields['role_'+str(key)] = forms.ChoiceField(choices=choices, label=label, required=False)
             # self.fields['role_' + str(key)].initial = value[2]
 
 
