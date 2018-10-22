@@ -1,6 +1,10 @@
-*.DS_Store
 *.pyc
+*~
+__pycache__
+myvenv
+db.sqlite3
+/static
+.DS_Store
 *.idea/
-*.sqlite3
 606/
 CrowdMentor/db.sqlite3
