@@ -20,14 +20,14 @@ def step_impl(context):
     # Fill login form and submit it (valid version)
     br.find_element_by_id('id_username').send_keys('foo')
     br.find_element_by_id('id_password').send_keys('bar')
-    br.find_element_by_name('submit').click()
+    br.find_element_by_id('submit').click()
 
 @then('I am redirected to the home page')
 def step_impl(context):
     br = context.browser
 
     # Checks success status
-    assert br.current_url.endswith('/home/')
+    assert br.current_url.endswith('/')
 
 @when('I submit an invalid login page')
 def step_impl(context):
@@ -38,7 +38,7 @@ def step_impl(context):
     # Fill login form and submit it (invalid version)
     br.find_element_by_id('id_username').send_keys('foo')
     br.find_element_by_id('id_password').send_keys('bar-is-invalid')
-    br.find_element_by_name('submit').click()
+    br.find_element_by_id('submit').click()
 
 @then('I get an error message saying that my username and password did not match.')
 def step_impl(context):
@@ -46,4 +46,4 @@ def step_impl(context):
 
     # Checks redirection URL
     assert br.current_url.endswith('/login/')
-    assert br.find_element_by_id('main_title').text == "Login failure"
+    assert br.find_element_by_id('error').text == "Your username and password didn't match. Please try again."

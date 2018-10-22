@@ -32,4 +32,4 @@ def change_roles(request):
         prf = Profile.objects.get(user_id=usr.id)
         user_dict[usr.id] = [usr.username, usr.email, prf.role]
     form = ChangeRolesForm(users=user_dict)
-    return render(request, 'changeRoles.html', {'form': form})
+    return render(request, 'changeRoles.html', {'form': form, 'user_dict': user_dict})
