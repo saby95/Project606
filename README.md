@@ -16,7 +16,7 @@ comprehensively.
 Iteration 1 : Task Updater(TU) submits the task, Worker completes the task and earns salary.\\
 For the first iteration, we have a simple question answering task where the worker must answer the question.
 
-Testing User Stories
+# Testing User Stories
 Like Cucumber, we have a package called behave which captures user requirements in plain English and maps them to test code written in Python. However, the Django framework does not provide a "Capybara" which acts as the user during testing. Instead, we are using a headless browser(a web browser without a GUI) and interacting with it using a webdriver which lets us simulate user actions like clicking buttons or following urls. The headless browser we are using is called PhantomJS and the webdriver is called Splinter, these along with behave are used to test the user stories.
 Also, we are using Factory Boy to create the data to be included the test database. For eg, the users are created in this way for testing the login feature of the website.
 
