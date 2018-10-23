@@ -17,7 +17,7 @@ def index(request):
     return render(request, 'tasks/index.html', context)
 
 #Controller for adding Tasks. If method is post submit form else show the form
-@login_required
+
 def add_tasks(request):
     if request.method == 'POST':
         user = User.objects.get(username=request.user.username)

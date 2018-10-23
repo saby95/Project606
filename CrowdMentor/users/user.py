@@ -17,7 +17,7 @@ def view(request):
 
     return render(request, 'home.html', {"profile": profile, "dict_functs" : dict_functs})
 
-@login_required
+
 def change_roles(request):
     users = User.objects.all()
     if request.method == 'POST':
@@ -32,4 +32,4 @@ def change_roles(request):
         prf = Profile.objects.get(user_id=usr.id)
         user_dict[usr.id] = [usr.username, usr.email, prf.role]
     form = ChangeRolesForm(users=user_dict)
-    return render(request, 'changeRoles.html', {'form': form, 'user_dict': user_dict})
+    return render(request, 'changeRoles.html', {'form': form, 'user_dict':user_dict})

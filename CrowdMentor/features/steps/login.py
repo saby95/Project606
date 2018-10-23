@@ -12,6 +12,12 @@ def step_impl(context):
     # Don't omit to call save() to insert object in database
     u.save()
 
+    u1 = UserFactory(username='admin', email='admin@example.com')
+    u1.set_password('bar')
+
+    # Don't omit to call save() to insert object in database
+    u1.save()
+
 @when('I submit a valid login page')
 def step_impl(context):
     br = context.browser
