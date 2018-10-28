@@ -3,9 +3,10 @@
 {% block content %}
     <h2>Welcome, {{ user.get_full_name }} <small> ({{ user.username }}) </small>!</h2>
     <h3>User role: {{ profile }}</h3><br>
+    <h3>Total Salary: ${{user.profile.total_salary}}</h3><br>
     {% for key, value in dict_functs.items %}
         <a href={{ key }}>{{ value }}</a></br>
     {% endfor %}
-<a href="tasks/open_audits">View open audits</a>
+<a href="tasks/open_audits">View open audits</a> <br />
 <a href="tasks/audits">View Claimed audits</a>
 {% endblock %}

@@ -92,11 +92,17 @@ def answer(request, task_id):
             if temp_tuj.task_id.audit_by == 1:
                 audit_prob = temp_tuj.task_id.audit_prob
             else:
-                audit_prob = temp_tuj.worker_id.profile.audit_prob_user
+                audit_prob = user.profile.audit_prob_user
             if random.random() <= audit_prob:
                 audit = Audit()
                 audit.task_id = task
                 audit.save()
+            if temp_tuj.task_id.salary_by == 1:
+                salary = temp_tuj.task_id.salary_task
+            else:
+                salary = temp_tuj.worker_id.profile.salary
+            user.profile.total_salary += salary
+            user.profile.save()
             return redirect('/tasks/claimed/')
     else:
         form = AnswerForm()
@@ -115,6 +121,7 @@ def open_audits(request):
     }
     return render(request, 'tasks/open_audit.html', context)
 
+@login_required
 def detail_audit(request, task_id):
     try:
         task = ResearchTasks.objects.get(pk=task_id)
@@ -161,6 +168,23 @@ def submit_audit(request, task_id):
             temp_audit_task = form.save(commit=False)
             temp_audit_task.finish_time = datetime.now()
             temp_audit_task.save()
+
+            #Salary calculation. Refactor this code
+            worker = tuj.worker_id
+            if audit_task.task_correct:
+                if tuj.task_id.salary_by == 1:
+                    bonus = tuj.task_id.bonus_task
+                else:
+                    bonus = worker.profile.bonus
+                worker.profile.total_salary += bonus
+                worker.profile.save()
+            else:
+                if tuj.task_id.salary_by == 1:
+                    fine = tuj.task_id.fine_task
+                else:
+                    fine = worker.profile.fine
+                worker.profile.total_salary -= fine
+                worker.profile.save()
             return redirect('/tasks/audits/')
     else:
         form = AuditForm()

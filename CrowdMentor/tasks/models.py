@@ -16,11 +16,11 @@ class ResearchTasks(models.Model):
     creation_time = models.DateTimeField(auto_now_add=True)
     num_workers = models.PositiveIntegerField(default=1)
     audit_by = models.IntegerField(choices=AUDIT_SELECTION, default=2)
-    audit_prob = models.DecimalField(max_digits=2, decimal_places=2, default=0.50)
+    audit_prob = models.DecimalField(max_digits=3, decimal_places=2, default=0.50)
     salary_by = models.IntegerField(choices=AUDIT_SELECTION, default=2)
-    salary_task = models.DecimalField(max_digits=4, decimal_places=2, default=0.20)
-    bonus_task = models.DecimalField(max_digits=4, decimal_places=2, default=0.10)
-    fine_task = models.DecimalField(max_digits=4, decimal_places=2, default=0.10)
+    salary_task = models.DecimalField(max_digits=4, decimal_places=2, default=0.02)
+    bonus_task = models.DecimalField(max_digits=4, decimal_places=2, default=0.01)
+    fine_task = models.DecimalField(max_digits=4, decimal_places=2, default=0.01)
 
 
     def __str__(self):
