@@ -1,0 +1,16 @@
+{% if audit_list %}
+    <ul>
+    {% for task in audit_list %}
+        {% if task.task_correct is None%}
+            <li><a href="/tasks/audits/{{ task.task_id.id }}/submit_audit">{{ task.task_id.task_summary}}</a></li>
+         {% else %}
+               <li>{{ task.task_id.task_summary}}</li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No tasks are available.</p>
+{% endif %}
+
+
+<a href="/">{{ 'Back' }}</a>

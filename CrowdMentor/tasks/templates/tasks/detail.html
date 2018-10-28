@@ -1,5 +1,7 @@
-{{task.task_summary}}
-{{ task.task_desc }}
+{{task.task_summary}}<br />
+{{ task.task_desc }}<br />
 <a href="/tasks/">{{ 'Back' }}</a>
 <a href="/">{{ 'Home' }}</a>
-<a href="/tasks/{{ task.id }}/claim">'Claim'</a>
+{% if claim_permission %}
+    <a href="/tasks/{{ task.id }}/claim">Claim</a>
+{% endif %}

@@ -1,0 +1,10 @@
+{% if audit_list %}
+    <ul>
+    {% for audit in audit_list %}
+        <li><a href="/tasks/open_audits/{{ audit.task_id.id }}/">{{ audit.task_id }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No tasks are available.</p>
+{% endif %}
+<a href="/">{{ 'Back' }}</a>
