@@ -1,10 +1,11 @@
 import random
 
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from datetime import datetime
+from django.contrib import messages
 
 from .models import ResearchTasks, TaskUserJunction, Audit
 
@@ -25,7 +26,8 @@ def add_tasks(request):
     user = User.objects.get(username=request.user.username)
     profile = user.profile.role
     if profile != 'task_updater':
-        return render(request, 'tasks/permission_denied.html')
+        messages.info(request, 'Permission Denied!! You do not have permission to access this page')
+        return HttpResponseRedirect('/')
     if request.method == 'POST':
         form = AddTaskForm(request.POST)
         if form.is_valid():
@@ -68,6 +70,10 @@ def claim(request, task_id):
 @login_required
 def claimed_tasks(request):
     user = User.objects.get(username=request.user.username)
+    profile = user.profile.role
+    if profile != 'worker':
+        messages.info(request, 'Permission Denied!! You do not have permission to access this page')
+        return HttpResponseRedirect('/')
     tuj_list =TaskUserJunction.objects.filter(worker_id = user)
     context = {
         'tuj_list': tuj_list,
@@ -118,7 +124,8 @@ def open_audits(request):
     user = User.objects.get(username=request.user.username)
     profile = user.profile.role
     if profile != 'auditor':
-        return render(request, 'tasks/permission_denied.html')
+        messages.info(request, 'Permission Denied!! You do not have permission to access this page')
+        return HttpResponseRedirect('/')
     audit_list = Audit.objects.filter(auditor_id=None)
     context = {
         'audit_list': audit_list,
@@ -130,7 +137,8 @@ def detail_audit(request, task_id):
     user = User.objects.get(username=request.user.username)
     profile = user.profile.role
     if profile != 'auditor':
-        return render(request, 'tasks/permission_denied.html')
+        messages.info(request, 'Permission Denied!! You do not have permission to access this page')
+        return HttpResponseRedirect('/')
     try:
         task = ResearchTasks.objects.get(pk=task_id)
         audit_tasks = Audit.objects.get(task_id = task)
@@ -144,7 +152,8 @@ def claim_audit(request, task_id):
     user = User.objects.get(username=request.user.username)
     profile = user.profile.role
     if profile != 'auditor':
-        return render(request, 'tasks/permission_denied.html')
+        messages.info(request, 'Permission Denied!! You do not have permission to access this page')
+        return HttpResponseRedirect('/')
     try:
         task = ResearchTasks.objects.get(pk=task_id)
         audit_tasks = Audit.objects.get(task_id=task)
@@ -160,7 +169,8 @@ def audit_tasks(request):
     user = User.objects.get(username=request.user.username)
     profile = user.profile.role
     if profile != 'auditor':
-        return render(request, 'tasks/permission_denied.html')
+        messages.info(request, 'Permission Denied!! You do not have permission to access this page')
+        return HttpResponseRedirect('/')
     audit_list =Audit.objects.filter(auditor_id = user)
     context = {
         'audit_list': audit_list,
@@ -172,7 +182,8 @@ def submit_audit(request, task_id):
     user = User.objects.get(username=request.user.username)
     profile = user.profile.role
     if profile != 'auditor':
-        return render(request, 'tasks/permission_denied.html')
+        messages.info(request, 'Permission Denied!! You do not have permission to access this page')
+        return HttpResponseRedirect('/')
     task = ResearchTasks.objects.get(pk=task_id)
     try:
         tuj = TaskUserJunction.objects.get(task_id=task)
