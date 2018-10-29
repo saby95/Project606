@@ -115,6 +115,10 @@ def answer(request, task_id):
 
 @login_required
 def open_audits(request):
+    user = User.objects.get(username=request.user.username)
+    profile = user.profile.role
+    if profile != 'auditor':
+        return render(request, 'tasks/permission_denied.html')
     audit_list = Audit.objects.filter(auditor_id=None)
     context = {
         'audit_list': audit_list,
@@ -123,6 +127,10 @@ def open_audits(request):
 
 @login_required
 def detail_audit(request, task_id):
+    user = User.objects.get(username=request.user.username)
+    profile = user.profile.role
+    if profile != 'auditor':
+        return render(request, 'tasks/permission_denied.html')
     try:
         task = ResearchTasks.objects.get(pk=task_id)
         audit_tasks = Audit.objects.get(task_id = task)
@@ -134,6 +142,9 @@ def detail_audit(request, task_id):
 @login_required
 def claim_audit(request, task_id):
     user = User.objects.get(username=request.user.username)
+    profile = user.profile.role
+    if profile != 'auditor':
+        return render(request, 'tasks/permission_denied.html')
     try:
         task = ResearchTasks.objects.get(pk=task_id)
         audit_tasks = Audit.objects.get(task_id=task)
@@ -147,6 +158,9 @@ def claim_audit(request, task_id):
 @login_required
 def audit_tasks(request):
     user = User.objects.get(username=request.user.username)
+    profile = user.profile.role
+    if profile != 'auditor':
+        return render(request, 'tasks/permission_denied.html')
     audit_list =Audit.objects.filter(auditor_id = user)
     context = {
         'audit_list': audit_list,
@@ -155,8 +169,11 @@ def audit_tasks(request):
 
 @login_required
 def submit_audit(request, task_id):
-    task = ResearchTasks.objects.get(pk=task_id)
     user = User.objects.get(username=request.user.username)
+    profile = user.profile.role
+    if profile != 'auditor':
+        return render(request, 'tasks/permission_denied.html')
+    task = ResearchTasks.objects.get(pk=task_id)
     try:
         tuj = TaskUserJunction.objects.get(task_id=task)
         audit_task = Audit.objects.get(auditor_id=user, task_id=task)
