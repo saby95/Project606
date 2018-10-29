@@ -1,3 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
 {{task.task_summary}}<br />
 {{ task.task_desc }}<br />
 <a href="/tasks/">{{ 'Back' }}</a>
@@ -5,3 +9,4 @@
 {% if claim_permission %}
     <a href="/tasks/{{ task.id }}/claim">Claim</a>
 {% endif %}
+{% endblock %}

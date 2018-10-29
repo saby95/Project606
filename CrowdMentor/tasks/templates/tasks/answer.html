@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}
 Page to submit answer for {{task}}<br \>
 {{task.task_desc}} <br \>
 <form method="post">
@@ -5,3 +8,4 @@ Page to submit answer for {{task}}<br \>
     {{form.as_p}}
     <button type="submit">Submit</button>
 </form>
+{% endblock %}

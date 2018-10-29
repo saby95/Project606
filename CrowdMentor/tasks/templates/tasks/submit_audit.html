@@ -1,3 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
 {{audit_task.task_id}} <br />
 {{audit_task.task_id.task_desc }} <br />
 Answer : {{tuj.answer}} <br />
@@ -8,3 +12,4 @@ Comment : {{tuj.comment}} <br \>
     {{form.as_p}}
     <button type="submit">Submit</button>
 </form>
+{% endblock %}

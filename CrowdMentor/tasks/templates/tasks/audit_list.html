@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}
 {% if audit_list %}
     <ul>
     {% for task in audit_list %}
@@ -14,3 +17,4 @@
 
 
 <a href="/">{{ 'Back' }}</a>
+{% endblock %}

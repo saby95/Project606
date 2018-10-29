@@ -34,7 +34,8 @@ def add_tasks(request):
             task = form.save(commit=False)
             task.creator_id = user
             task.save()
-            return redirect('/tasks/')
+            messages.info(request, 'New Task Added')
+            return HttpResponseRedirect('/tasks/')
     else:
         form = AddTaskForm()
     return render(request, 'tasks/add_task.html', {'form': form})
@@ -64,7 +65,8 @@ def claim(request, task_id):
     tuj.task_id = task
     tuj.save()
     task.save()
-    return redirect('/tasks/')
+    messages.info(request, 'New Task Claimed')
+    return HttpResponseRedirect('/tasks/')
 
 #Controller for adding Viewing Claimed Tasks
 @login_required
@@ -109,7 +111,8 @@ def answer(request, task_id):
                 salary = temp_tuj.worker_id.profile.salary
             user.profile.total_salary += salary
             user.profile.save()
-            return redirect('/tasks/claimed/')
+            messages.info(request, 'Answer Added')
+            return HttpResponseRedirect('/tasks/claimed/')
     else:
         form = AnswerForm()
     context = {
@@ -162,7 +165,8 @@ def claim_audit(request, task_id):
     audit_tasks.auditor_id = user
     audit_tasks.start_time = datetime.now()
     audit_tasks.save()
-    return redirect('/tasks/')
+    messages.info(request, 'Task Claimed for Review')
+    return HttpResponseRedirect('/tasks/audits/')
 
 @login_required
 def audit_tasks(request):
@@ -213,7 +217,8 @@ def submit_audit(request, task_id):
                     fine = worker.profile.fine
                 worker.profile.total_salary -= fine
                 worker.profile.save()
-            return redirect('/tasks/audits/')
+            messages.info(request, 'Review Submitted')
+            return HttpResponseRedirect('/tasks/audits/')
     else:
         form = AuditForm()
     context = {

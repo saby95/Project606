@@ -1,6 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
 Here you can add tasks
 <form method="post">
     {% csrf_token %}
     {{form.as_p}}
     <button id="id_add_task" type="submit">Submit</button>
 </form>
+{% endblock %}

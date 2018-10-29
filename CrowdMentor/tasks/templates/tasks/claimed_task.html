@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}
 {% if tuj_list %}
     <ul>
     {% for tuj in tuj_list %}
@@ -14,3 +17,4 @@
 
 
 <a href="/">{{ 'Back' }}</a>
+{% endblock %}
