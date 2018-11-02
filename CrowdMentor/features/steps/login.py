@@ -21,35 +21,36 @@ def step_impl(context):
 @when('I submit a valid login page')
 def step_impl(context):
     br = context.browser
-    br.get(context.base_url + '/login/')
+    br.visit(context.base_url + '/login/')
 
     # Fill login form and submit it (valid version)
-    br.find_element_by_id('id_username').send_keys('foo')
-    br.find_element_by_id('id_password').send_keys('bar')
-    br.find_element_by_id('submit').click()
+    br.fill('username', 'foo')
+    br.fill('password', 'bar')
+    br.find_by_id('submit').first.click()
 
 @then('I am redirected to the home page')
 def step_impl(context):
     br = context.browser
 
     # Checks success status
-    assert br.current_url.endswith('/')
+    print(br.url)
+    assert br.url.endswith('/')
 
 @when('I submit an invalid login page')
 def step_impl(context):
     br = context.browser
 
-    br.get(context.base_url + '/login/')
+    br.visit(context.base_url + '/login/')
 
     # Fill login form and submit it (invalid version)
-    br.find_element_by_id('id_username').send_keys('foo')
-    br.find_element_by_id('id_password').send_keys('bar-is-invalid')
-    br.find_element_by_id('submit').click()
+    br.fill('username', 'foo')
+    br.fill('password', 'bar-is-invalid')
+    br.find_by_id('submit').first.click()
 
 @then('I get an error message saying that my username and password did not match.')
 def step_impl(context):
     br = context.browser
 
     # Checks redirection URL
-    assert br.current_url.endswith('/login/')
-    assert br.find_element_by_id('error').text == "Your username and password didn't match. Please try again."
+    assert br.url.endswith('/login/')
+    assert br.find_by_id('error').text == "Your username and password didn't match. Please try again."

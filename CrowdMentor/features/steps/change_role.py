@@ -37,8 +37,8 @@ def step_impl(context):
 @when('I change any user role')
 def step_impl(context):
     br = context.browser
-    br.get(context.base_url + '/change_roles/')
+    br.visit(context.base_url + '/change_roles/')
 
     # Fill login form and submit it (valid version)
     #br.find_element_by_id('role_2').send_keys('foo')
-    br.find_element_by_id('id_change_role').click()
+    br.find_by_id('id_change_role').first.click()

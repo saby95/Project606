@@ -30,7 +30,7 @@ DEBUG = True
 #DEBUG = False
 #ENVIRONMENT = 'production'
 #ALLOWED_HOSTS = ['localhost', '127.0.0.1', '823017eb886440b68e431a9d07031dc7.vfs.cloud9.us-east-2.amazonaws.com']
-ALLOWED_HOSTS = ['127.0.0.1', 'lit-wildwood-12573.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'lit-wildwood-12573.herokuapp.com', 'localhost']
 
 # Application definition
 
