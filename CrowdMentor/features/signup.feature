@@ -1,11 +1,11 @@
 Feature: Signup form
 
-  Scenario: Access the signup form
-
-    Given a new user tries to access the site
+  Scenario: New user accesses the signup form
+    Given I am a new user who tries to access the site
     When I submit a valid signup page
     Then I am redirected to the home page
 
-    Given a new user tries to access the site
-    When I submit an invalid signup page
+  Scenario: Existing user accesses the signup form
+    Given I am an existing user who tries to access the site
+    When I submit a valid signup page
     Then I get an error message saying that a user with that username already exists.
