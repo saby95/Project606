@@ -3,13 +3,12 @@ from test.factories.user import UserFactory
 
 @when('I submit a valid login page')
 def step_impl(context):
-    br = context.browser
-    br.visit(context.base_url + '/login/')
+    context.browser.visit(context.base_url)
 
     # Fill login form and submit it (valid version)
-    br.fill('username', 'foo')
-    br.fill('password', 'bar')
-    br.find_by_id('submit').first.click()
+    context.browser.fill('username', 'foo')
+    context.browser.fill('password', 'bar')
+    context.browser.find_by_id('submit').first.click()
 
 @when('I submit an invalid login page')
 def step_impl(context):
