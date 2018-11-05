@@ -1,8 +1,11 @@
 behave==1.2.6
 behave-django==1.1.0
-dj-database-url==0.5.0
+codegen==1.0
 coverage==4.5.1
+dj-database-url==0.5.0
 Django==1.11.16
+django-redis-sessions==0.6.1
+enum==0.4.7
 enum34==1.1.6
 factory-boy==2.11.1
 Faker==0.9.2
@@ -13,9 +16,12 @@ npm==0.1.1
 optional-django==0.1.0
 parse==1.9.0
 parse-type==0.4.2
+patterns==0.3
 psycopg2==2.7.5
+pymongo==3.7.2
 python-dateutil==2.7.3
 pytz==2018.5
+redis==2.10.6
 selenium==3.14.1
 six==1.11.0
 text-unidecode==1.2
