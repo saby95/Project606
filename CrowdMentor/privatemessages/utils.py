@@ -2,6 +2,7 @@ import json
 import os
 
 import redis
+import urlparse
 
 from django.utils import dateformat
 
@@ -48,7 +49,8 @@ def send_message(thread_id,
     redis_url = os.getenv('REDISTOGO_URL')
     urlparse.uses_netloc.append('redis')
     url = urlparse.urlparse(redis_url)
-    r = Redis(host=url.hostname, port=url.port, db=0, password=url.password)
+    r = redis.StrictRedis(host=url.hostname, port=url.port, db=0, password=url.password)
+    #r = redis.StrictRedis(host='spinyfin.redistogo.com', port=10695, db=0, password='35461f89f6bb20899d7616def92dbd0a')
 
     if sender_name:
         r.publish("".join(["thread_", thread_id, "_messages"]), json.dumps({
