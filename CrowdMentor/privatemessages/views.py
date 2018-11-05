@@ -120,7 +120,7 @@ def messages_view(request):
             chat_participants.append(user.username)
 
     elif role == 'worker':
-        participants = Profile.objects.filter(id=request.user.profile.mentor_id)
+        participants = Profile.objects.filter(user_id=request.user.profile.mentor_id)
         for usr in participants:
             user = User.objects.get(id=usr.user_id)
             chat_participants.append(user.username)
