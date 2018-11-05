@@ -14,6 +14,7 @@ def view(request):
     dict_functs={}
     if profile == UserRoles.TASK_UPDATER.value:
         dict_functs['/tasks/add_tasks']= 'Add task'
+        dict_functs['/tasks/'] = 'View task'
 
     if profile == UserRoles.ADMIN.value:
         dict_functs['/change_roles'] = 'Change user roles'
