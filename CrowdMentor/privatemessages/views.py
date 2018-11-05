@@ -1,7 +1,7 @@
 # Create your views here.
 
 import json
-
+import os
 import redis
 
 from django.shortcuts import render, get_object_or_404
@@ -131,7 +131,11 @@ def messages_view(request):
                                       "chat_participants": chat_participants,
                                   })
 
-    r = redis.StrictRedis()
+    #r = redis.StrictRedis()
+    redis_url = os.getenv('REDISTOGO_URL')
+    urlparse.uses_netloc.append('redis')
+    url = urlparse.urlparse(redis_url)
+    r = Redis(host=url.hostname, port=url.port, db=0, password=url.password)
 
     user_id = request.user.id
     for thread in threads:
@@ -162,11 +166,11 @@ def chat_view(request, thread_id):
 
     user_id = str(request.user.id)
 
-    r = redis.StrictRedis()
-
-
-
-
+    #r = redis.StrictRedis()
+    redis_url = os.getenv('REDISTOGO_URL')
+    urlparse.uses_netloc.append('redis')
+    url = urlparse.urlparse(redis_url)
+    r = Redis(host=url.hostname, port=url.port, db=0, password=url.password)
 
     messages_total = r.hget(
         "".join(["thread_", thread_id, "_messages"]),

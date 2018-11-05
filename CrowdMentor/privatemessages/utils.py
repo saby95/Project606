@@ -1,4 +1,5 @@
 import json
+import os
 
 import redis
 
@@ -43,7 +44,11 @@ def send_message(thread_id,
     thread_id = str(thread_id)
     sender_id = str(sender_id)
 
-    r = redis.StrictRedis()
+    #r = redis.StrictRedis()
+    redis_url = os.getenv('REDISTOGO_URL')
+    urlparse.uses_netloc.append('redis')
+    url = urlparse.urlparse(redis_url)
+    r = Redis(host=url.hostname, port=url.port, db=0, password=url.password)
 
     if sender_name:
         r.publish("".join(["thread_", thread_id, "_messages"]), json.dumps({
