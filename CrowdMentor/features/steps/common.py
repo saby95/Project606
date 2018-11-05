@@ -67,3 +67,28 @@ def step_impl(context):
     br.fill('username', 'admin')
     br.fill('password', 'bar')
     br.find_by_id('submit').first.click()
+
+@given('I am an user logged in as the user with auditor access')
+def step_impl(context):
+    br = context.browser
+    br.visit(context.base_url)
+
+    # Fill login form and submit it (valid version)
+    br.fill('username', 'auditor')
+    br.fill('password', 'bar')
+    br.find_by_id('submit').first.click()
+
+@given('I am an existing user with auditor access')
+def step_impl(context):
+    u = UserFactory(username='auditor', email='auditor@example.com')
+    u.set_password('bar')
+    u.save()
+    p = Profile.objects.get(user_id=u.id)
+    p.role = UserRoles.AUDITOR.value
+    p.save()
+
+from .tasks.models import ResearchTasks
+@given('I add a task to be audited')
+def step_impl(context):
+    r = ResearchTasks(audit_prob=0.99)
+    r.save()
