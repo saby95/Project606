@@ -8,6 +8,7 @@
     <header>
       <h1>Crowd Mentor</h1>
       {% if user.is_authenticated %}
+        <h2>Welcome, {{ user.get_full_name }} <small> ({{ user.username }}) </small>!</h2>
         <a href="{% url 'logout' %}">logout</a>
       {% else %}
         <a href="{% url 'login' %}">login</a> / <a href="{% url 'signup' %}">signup</a>
@@ -16,8 +17,8 @@
         <font size="3" color="red">
        {% if messages %}
            <ul class="messages">
-               {% for message in messages %}
-                   <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+               {% for msg in messages %}
+                   <li {% if msg.tags %} class="{{ msg.tags }}"{% endif %}>{{ msg }}</li>
                {% endfor %}
           </ul>
       {% endif %}

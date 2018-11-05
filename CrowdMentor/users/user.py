@@ -21,10 +21,14 @@ def view(request):
     if profile == UserRoles.WORKER.value:
         dict_functs['/tasks/claimed/'] = 'View claimed tasks'
         dict_functs['/tasks/'] = 'View open tasks'
+        dict_functs['/messages/'] = 'View messages'
 
     if profile == UserRoles.AUDITOR.value:
         dict_functs['/tasks/open_audits/'] = 'View open audits'
         dict_functs['/tasks/audits/'] = 'View claimed audits'
+
+    if profile == UserRoles.MENTOR.value:
+        dict_functs['/messages/'] = 'View messages'
 
     return render(request, 'home.html', {"profile": profile, "dict_functs" : dict_functs})
 

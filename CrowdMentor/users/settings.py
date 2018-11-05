@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     #Task model
     'tasks.apps.TasksConfig',
     'users',
+    'privatemessages.apps.MessageConfig',
 ]
 
 MIDDLEWARE = [
@@ -160,3 +161,8 @@ STATICFILES_DIRS = (
 
 prod_db  =  dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(prod_db)
+SESSION_ENGINE = 'redis_sessions.session'
+
+API_KEY = '$0m3-U/\/1qu3-K3Y'
+
+SEND_MESSAGE_API_URL = 'http://127.0.0.1:8000/messages/send_message_api'

@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h2>Welcome, {{ user.get_full_name }} <small> ({{ user.username }}) </small>!</h2>
     <h3>User role: {{ profile }}</h3><br>
     <h3>Total Salary: ${{user.profile.total_salary}}</h3><br>
     {% for key, value in dict_functs.items %}

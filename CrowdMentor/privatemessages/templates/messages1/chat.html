@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}{{ partner.username }}{% endblock %}
+
+{% block head %}
+<script type="text/javascript">
+$(document).ready(function() {
+    activate_chat({{ thread_id }}, "{{ user.username }}", {
+        "total": {{ messages_total }},
+        "sent": {{ messages_sent }},
+        "received": {{ messages_received }}
+    });
+});
+</script>
+{% endblock %}
+
+{% block content %}
+{% load pluralize %}
+<div class="chat">
+    <div class="partner">
+        <p class="name"><b>Conversation with {{ partner.username }}</b></p>
+        <p class="messages"><span class="total">Total messages: {{ messages_total }}</span> {{ messages_total }} (<span class="received">{{ messages_received }}</span> received, <span class="sent">{{ messages_sent }}</span> sent to {{ partner.username }})</p>
+    </div>
+    <div class="conversation">
+        {% for message in thread_messages reversed %}
+        <div class="message"> 
+            {% if message.sender == user %}<p class="author we"><b> {{ user.username }}:</b></p>{% else %}<p class="author partner"><b>{{ partner.username }}:</b></p>{% endif %}
+            <p class="message">{{ message.text|linebreaksbr }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    <form action="{% url 'send_message_view' %}" method="post" class="new_message">
+        {% csrf_token %}
+        <input type="hidden" name="recipient_name" value={{ partner.username }}>
+        <p><textarea name="message" placeholder="message"></textarea></p>
+        <p><input type="submit" value="submit"></p>
+    </form>
+</div>
+{% endblock content %}
