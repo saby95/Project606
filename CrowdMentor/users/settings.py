@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import redis
+import urlparse
 import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -92,16 +94,16 @@ DATABASES = {
 
 
 #Production database. Uncomment this and comment the above to deploy to heroku
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#        'NAME': 'crowdmentor',
-#        'USER': 'diptanilcm',
-#         'PASSWORD': 'qaws1234',
-#         'HOST': 'localhost',
-#         'PORT': '',
-#     }
-# }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'crowdmentor',
+#         'USER': 'diptanilcm',
+#          'PASSWORD': 'qaws1234',
+#          'HOST': 'localhost',
+#          'PORT': '',
+#      }
+#  }
 
 
 
@@ -157,12 +159,32 @@ STATICFILES_DIRS = (
 )
 
 #When pushing to heroku "Uncomment this "
-#STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 prod_db  =  dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(prod_db)
-SESSION_ENGINE = 'redis_sessions.session'
+#SESSION_ENGINE = 'redis_sessions.session'
 
 API_KEY = '$0m3-U/\/1qu3-K3Y'
 
-SEND_MESSAGE_API_URL = 'http://127.0.0.1:8000/messages/send_message_api'
+# SEND_MESSAGE_API_URL = 'http://127.0.0.1:8000/messages/send_message_api'
+
+redis_url = os.getenv('REDISTOGO_URL', 'redis://localhost:6379')
+#redis = redis.from_url(redis_url)
+#redis_url = urlparse.urlparse(os.environ.get('REDISTOGO_URL', 'redis://localhost:6379'))
+
+
+#redis_url = os.getenv('REDISTOGO_URL')
+urlparse.uses_netloc.append('redis')
+url = urlparse.urlparse(redis_url)
+
+CACHES = {
+    'default': {
+        'BACKEND': 'redis_cache.RedisCache',
+        'LOCATION': '%s:%s' % (url.hostname, url.port),
+        'OPTIONS': {
+            'DB': 0,
+            'PASSWORD': url.password,
+        }
+    }
+}
