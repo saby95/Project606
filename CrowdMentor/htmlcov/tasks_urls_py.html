@@ -79,6 +79,11 @@
 <p id="n10" class="pln"><a href="#n10">10</a></p>
 <p id="n11" class="pln"><a href="#n11">11</a></p>
 <p id="n12" class="pln"><a href="#n12">12</a></p>
+<p id="n13" class="pln"><a href="#n13">13</a></p>
+<p id="n14" class="pln"><a href="#n14">14</a></p>
+<p id="n15" class="pln"><a href="#n15">15</a></p>
+<p id="n16" class="pln"><a href="#n16">16</a></p>
+<p id="n17" class="pln"><a href="#n17">17</a></p>
 
             </td>
             <td class="text">
@@ -93,7 +98,12 @@
 <p id="t9" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^claimed/$'</span><span class="op">,</span> <span class="nam">views</span><span class="op">.</span><span class="nam">claimed_tasks</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="str">'claimed_tasks'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
 <p id="t10" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^(?P&lt;task_id>[0-9]+)/claim$'</span><span class="op">,</span> <span class="nam">views</span><span class="op">.</span><span class="nam">claim</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="str">'claim'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
 <p id="t11" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^claimed/(?P&lt;task_id>[0-9]+)/answer$'</span><span class="op">,</span> <span class="nam">views</span><span class="op">.</span><span class="nam">answer</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="str">'answer'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
-<p id="t12" class="pln"><span class="op">]</span><span class="strut">&nbsp;</span></p>
+<p id="t12" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^audits/$'</span><span class="op">,</span> <span class="nam">views</span><span class="op">.</span><span class="nam">audit_tasks</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="str">'audit_tasks'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t13" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^open_audits/$'</span><span class="op">,</span> <span class="nam">views</span><span class="op">.</span><span class="nam">open_audits</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="str">'open_audits'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t14" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^audits/(?P&lt;task_id>[0-9]+)/claim_audit'</span><span class="op">,</span> <span class="nam">views</span><span class="op">.</span><span class="nam">claim_audit</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="str">'claim_audit'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t15" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^audits/(?P&lt;task_id>[0-9]+)/submit_audit'</span><span class="op">,</span> <span class="nam">views</span><span class="op">.</span><span class="nam">submit_audit</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="str">'submit_audit'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t16" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^open_audits/(?P&lt;task_id>[0-9]+)/$'</span><span class="op">,</span> <span class="nam">views</span><span class="op">.</span><span class="nam">detail_audit</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="str">'detail_audit'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t17" class="pln"><span class="op">]</span><span class="strut">&nbsp;</span></p>
 
             </td>
         </tr>
@@ -104,7 +114,7 @@
     <div class="content">
         <p>
             <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v4.5.1</a>,
-            created at 2018-10-22 21:44
+            created at 2018-11-05 18:49
         </p>
     </div>
 </div>
