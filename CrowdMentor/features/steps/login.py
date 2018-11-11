@@ -1,5 +1,5 @@
 from behave import given, when, then
-from test.factories.user import UserFactory
+
 
 @when('I submit a valid login page')
 def step_impl(context):
@@ -9,6 +9,7 @@ def step_impl(context):
     context.browser.fill('username', 'foo')
     context.browser.fill('password', 'bar')
     context.browser.find_by_id('submit').first.click()
+
 
 @when('I submit an invalid login page')
 def step_impl(context):
@@ -20,6 +21,7 @@ def step_impl(context):
     br.fill('username', 'foo')
     br.fill('password', 'bar-is-invalid')
     br.find_by_id('submit').first.click()
+
 
 @then('I get an error message saying that my username and password did not match.')
 def step_impl(context):

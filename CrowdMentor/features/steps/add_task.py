@@ -10,9 +10,4 @@ def step_impl(context):
     print('give valid task: ', br.url)
     br.find_by_id('id_add_task').first.click()
 
-@then('I am redirected to the task page')
-def step_impl(context):
-    br = context.browser
-    #print('give valid task: ', br.url)
-    # Checks success status
-    assert br.url.endswith('/tasks/')
+
