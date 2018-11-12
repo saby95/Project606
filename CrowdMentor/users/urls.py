@@ -39,4 +39,6 @@ urlpatterns = [
     #For the tasks
     url(r'^tasks/', include('tasks.urls')),
     url(r'^messages/', include('privatemessages.urls')),
+    #For the peerhelp
+    url(r'^help/', include('peerhelp.urls')),
 ]

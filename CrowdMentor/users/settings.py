@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'tasks.apps.TasksConfig',
     'users',
     'privatemessages.apps.MessageConfig',
+    'peerhelp.apps.PeerhelpConfig',
 ]
 
 MIDDLEWARE = [

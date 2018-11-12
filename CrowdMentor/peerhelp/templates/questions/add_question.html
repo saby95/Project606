@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+Here you can add question
+<form method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button id="id_add_question" type="submit">Submit</button>
+</form>
+{% endblock %}

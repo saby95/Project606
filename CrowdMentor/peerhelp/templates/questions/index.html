@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if questions %}
+    <ul>
+    {% for ques in questions %}
+        <li><a href="/help/{{ ques.id }}/">{{ ques.question_summary }}</a> </br> by {{ques.creator_id}} at
+            {{ques.creation_time}} </br>  {{ques.up_votes}} <a href="/help/{{ ques.id }}/upvote">Upvote</a>
+            {{ques.down_votes}} <a href="/help/{{ ques.id }}/downvote">Downvote</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No questions are available.</p>
+{% endif %}
+<a href="/help/add_ques/">Add Question</a></br>
+<a href="/">{{ 'Back' }}</a>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{{question.question_summary}} </br>
+{{question.question_desc}}
+{% if answers %}
+    <ul>
+    {% for ans in answers %}
+        <li>{{ans}} </br> by {{ans.creator_id}} at
+            {{ans.creation_time}} </br> {{ans.up_votes}} <a href="/help/{{ question.id }}/{{ans.id}}/upvote">Upvote</a>
+            {{ans.down_votes}} <a href="/help/{{ question.id }}/{{ans.id}}/downvote">Downvote</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No answers are available.</p>
+{% endif %}
+<form method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button id="id_add_answer" type="submit">Submit</button>
+</form>
+<a href="/help/">{{ 'Back' }}</a>
+{% endblock %}
