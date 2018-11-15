@@ -7,7 +7,7 @@
   {% endif %}
   <form method="post">
     {% csrf_token %}
-    <input type="hidden" name="next" value="{{ next }}" />
+    <input type="hidden" name="next" value="/" />
     {% for field in form %}
       <p>
         {{ field.label_tag }}<br>

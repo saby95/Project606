@@ -27,8 +27,8 @@ urlpatterns = [
 
     # Login and Registration
     url(r'^$', user.view, name='view'),
-    url(r'^home/$', user.view, name='view'),
-    url(r'^login/$', auth_views.LoginView.as_view(template_name="login.html"), name='login'),
+    # url(r'^home/$', user.view, name='view'),
+    url(r'^login/$', auth_views.LoginView.as_view(template_name="login.html"), {'next_page': '/'}, name='login'),
     url(r'^logout/$', auth_views.logout, {'next_page': '/'}, name='logout'),
     url(r'^signup/$', register.signup, name='signup'),
     url(r'^change_roles/$', user.change_roles, name='change_roles'),
@@ -38,7 +38,21 @@ urlpatterns = [
 
     #For the tasks
     url(r'^tasks/', include('tasks.urls')),
+
+    # Chat
     url(r'^messages/', include('privatemessages.urls')),
+
     #For the peerhelp
     url(r'^help/', include('peerhelp.urls')),
+
+    # Password Reset
+    url(r'^password_reset/$', auth_views.PasswordResetView.as_view(template_name="password_reset_form.html"),
+        name='password_reset'),
+    url(r'^password_reset/done/$', auth_views.PasswordResetDoneView.as_view(template_name="password_reset_done.html"),
+        name='password_reset_done'),
+    url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        auth_views.PasswordResetConfirmView.as_view(template_name="password_reset_confirm.html"),
+        name='password_reset_confirm'),
+    url(r'^reset/done/$', auth_views.PasswordResetCompleteView.as_view(template_name="password_reset_complete.html"),
+        name='password_reset_complete'),
 ]

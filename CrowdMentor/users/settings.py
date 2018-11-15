@@ -149,7 +149,13 @@ LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'home'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'mayank.sharma'
+EMAIL_HOST_PASSWORD = 'Qaws@1234'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'CrowdMentor Team <noreply@jaldapararhinocottage.com>'
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
