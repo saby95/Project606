@@ -46,7 +46,7 @@ def send_message(thread_id,
     sender_id = str(sender_id)
 
     #r = redis.StrictRedis()
-    redis_url = os.getenv('REDISTOGO_URL')
+    redis_url = os.getenv('REDISTOGO_URL', 'redis://localhost:6379')
     urlparse.uses_netloc.append('redis')
     url = urlparse.urlparse(redis_url)
     r = redis.StrictRedis(host=url.hostname, port=url.port, db=0, password=url.password)

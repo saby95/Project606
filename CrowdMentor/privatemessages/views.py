@@ -133,7 +133,7 @@ def messages_view(request):
                                   })
 
     #r = redis.StrictRedis()
-    redis_url = os.getenv('REDISTOGO_URL')
+    redis_url = os.getenv('REDISTOGO_URL', 'redis://localhost:6379')
     urlparse.uses_netloc.append('redis')
     url = urlparse.urlparse(redis_url)
     r = redis.StrictRedis(host=url.hostname, port=url.port, db=0, password=url.password)
@@ -169,7 +169,7 @@ def chat_view(request, thread_id):
     user_id = str(request.user.id)
 
     #r = redis.StrictRedis()
-    redis_url = os.getenv('REDISTOGO_URL')
+    redis_url = os.getenv('REDISTOGO_URL', 'redis://localhost:6379')
     urlparse.uses_netloc.append('redis')
     url = urlparse.urlparse(redis_url)
     r = redis.StrictRedis(host=url.hostname, port=url.port, db=0, password=url.password)
