@@ -1,6 +1,6 @@
 import random
 
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -10,6 +10,7 @@ from django.contrib import messages
 from .models import ResearchTasks, TaskUserJunction, Audit
 
 from .forms import AddTaskForm, AnswerForm, AuditForm
+from users.profile import Profile
 
 #Controller for View Open tasks
 @login_required
@@ -227,3 +228,53 @@ def submit_audit(request, task_id):
         'tuj' : tuj,
     }
     return render(request, 'tasks/submit_audit.html', context)
+
+@login_required
+def all_task_status(request):
+    user = User.objects.get(username=request.user.username)
+    profile = user.profile.role
+    if profile != 'admin':
+        messages.info(request, 'Permission Denied!! You do not have permission to access this page')
+        return HttpResponseRedirect('/')
+
+    mentors = Profile.objects.filter(role='mentor')
+    mentor_dict = {}
+    for usr in mentors:
+        username=User.objects.get(id=usr.user_id)
+        mentor_dict[username]=str(usr.user_id)
+
+    return render(request, 'tasks/all_task_status.html', {'mentor_dict': mentor_dict})
+
+@login_required
+def task_status(request, userid):
+    user = User.objects.get(username=request.user.username)
+    profile = user.profile.role
+    if profile != 'mentor' and profile != 'admin':
+        messages.info(request, 'Permission Denied!! You do not have permission to access this page')
+        return HttpResponseRedirect('/')
+
+    participants = Profile.objects.filter(mentor_id=userid)
+    user_names = []
+    for usr in participants:
+        user = User.objects.get(id=usr.user_id)
+        tasks_claimed = TaskUserJunction.objects.filter(worker_id_id=usr.user_id)
+        for task in tasks_claimed:
+            task_summary = ResearchTasks.objects.get(id=task.task_id_id).task_summary
+            if_audit = 1
+            try:
+                task_audit = Audit.objects.get(task_id_id=task.task_id_id)
+            except:
+                if_audit = 0
+            if task.submission_time is None:
+                user_names.append([user.username, task_summary, 'claimed', task.task_id_id])
+            elif task.submission_time is not None and if_audit == 0:
+                user_names.append([user.username, task_summary, 'finished without audit', task.task_id_id])
+            elif task.submission_time is not None and if_audit == 1:
+                if task_audit.finish_time is None:
+                    user_names.append([user.username, task_summary, 'waiting for audit', task.task_id_id])
+                elif task_audit.task_correct == 1:
+                    user_names.append([user.username, task_summary, 'successful audit', task.task_id_id])
+                else:
+                    user_names.append([user.username, task_summary, 'failed audit', task.task_id_id])
+
+    return render(request, 'tasks/task_status.html', {'user_names': user_names})

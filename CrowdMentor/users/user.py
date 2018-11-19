@@ -18,6 +18,7 @@ def view(request):
 
     if profile == UserRoles.ADMIN.value:
         dict_functs['/change_roles'] = 'Change user roles'
+        dict_functs['/tasks/all_task_status'] = 'See the status of all tasks'
 
     if profile == UserRoles.WORKER.value:
         dict_functs['/tasks/claimed/'] = 'View claimed tasks'
@@ -30,6 +31,7 @@ def view(request):
 
     if profile == UserRoles.MENTOR.value:
         dict_functs['/messages/'] = 'View messages'
+        dict_functs['/tasks/task_status/'+str(user_id)+'/'] = 'View task status'
 
     return render(request, 'home.html', {"profile": profile, "dict_functs" : dict_functs})
 

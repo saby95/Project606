@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<table border="1">
+    <tr>
+        <th>Username</th>
+        <th>Job Status</th>
+    </tr>
+{% for key, value in mentor_dict.items %}
+    <tr>
+        <th>{{ key }}</th>
+        <th><a href="/tasks/task_status/{{ value }}/">Tasks</a></th>
+    </tr>
+{% endfor %}
+</table>
+{% endblock %}
