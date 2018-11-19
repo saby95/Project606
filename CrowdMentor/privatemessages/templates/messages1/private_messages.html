@@ -16,7 +16,7 @@
         <p>Choose Recipient: &nbsp;&nbsp;&nbsp;&nbsp;
         <select id="recipient_name" name="recipient_name">
             {% for y in chat_participants %}
-                <option value="{{ y }}">{{ y }}</option>
+                <option value="{{ y.0 }}">{{ y.0 }}&nbsp;Online:&nbsp;{{ y.1 }}</option>
             {% endfor %}
         </select>
         </p>

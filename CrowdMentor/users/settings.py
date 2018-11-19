@@ -60,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'users.active_user.ActiveUserMiddleware',
 ]
 
 ROOT_URLCONF = 'users.urls'
@@ -192,6 +193,19 @@ CACHES = {
         'OPTIONS': {
             'DB': 0,
             'PASSWORD': url.password,
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
     }
+    # 'default': {
+    #     'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    #     'LOCATION': 'default-cache'
+    # }
 }
+
+
+# Number of seconds of inactivity before a user is marked offline
+USER_ONLINE_TIMEOUT = 300
+
+# Number of seconds that we will keep track of inactive users for before
+# their last seen is removed from the cache
+USER_LASTSEEN_TIMEOUT = 60 * 60 * 24 * 7

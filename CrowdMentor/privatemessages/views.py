@@ -118,13 +118,13 @@ def messages_view(request):
         participants = Profile.objects.filter(mentor_id=user_id)
         for usr in participants:
             user = User.objects.get(id=usr.user_id)
-            chat_participants.append(user.username)
+            chat_participants.append([user.username, user.profile.online])
 
     elif role == 'worker':
         participants = Profile.objects.filter(user_id=request.user.profile.mentor_id)
         for usr in participants:
             user = User.objects.get(id=usr.user_id)
-            chat_participants.append(user.username)
+            chat_participants.append([user.username, user.profile.online])
 
     if not threads:
         return render(request, 'messages1/private_messages.html',
