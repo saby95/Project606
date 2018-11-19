@@ -9,6 +9,9 @@ from decimal import Decimal
 
 from UserRoles import UserRoles
 
+import datetime
+from django.core.cache import cache
+from django.conf import settings
 
 class Profile(models.Model):
     class Meta:
@@ -24,8 +27,23 @@ class Profile(models.Model):
     total_salary = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal(0.00))
     audit_prob_user = models.DecimalField(max_digits=3, decimal_places=2, default=Decimal(0.00))
     mentor = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='mentor', blank=True)
+
     def __str__(self):
         return str(self.user)
+
+    def last_seen(self):
+        return cache.get('seen_%s' % self.user.username)
+
+    def online(self):
+        if self.last_seen():
+            now = datetime.datetime.now()
+            if now > self.last_seen() + datetime.timedelta(
+                    seconds=settings.USER_ONLINE_TIMEOUT):
+                return False
+            else:
+                return True
+        else:
+            return False
 
 @receiver(post_save, sender=User)
 def update_user_profile(sender, instance, created, **kwargs):
