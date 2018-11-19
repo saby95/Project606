@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^audits/(?P<task_id>[0-9]+)/claim_audit', views.claim_audit, name='claim_audit'),
     url(r'^audits/(?P<task_id>[0-9]+)/submit_audit', views.submit_audit, name='submit_audit'),
     url(r'^open_audits/(?P<task_id>[0-9]+)/$', views.detail_audit, name='detail_audit'),
-    url(r'^task_status/(?P<userid>[0-9]+)/$', views.task_status, name='task_status'),
+    url(r'^task_status/(?P<user_id>[0-9]+)/$', views.task_status, name='task_status'),
     url(r'^all_task_status/$', views.all_task_status, name='all_task_status'),
+    url(r'^view_task/(?P<user_id>[0-9]+)/(?P<task_id>[0-9]+)/$', views.view_task, name='view_task'),
 ]

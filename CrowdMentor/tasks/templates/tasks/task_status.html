@@ -10,7 +10,7 @@
 {% for item in user_names %}
     <tr>
         <th>{{ item.0 }}</th>
-        <th><a href="/tasks/{{ item.3 }}/">{{ item.1 }}</a></th>
+        <th><a href="/tasks/view_task/{{ item.4 }}/{{ item.3 }}/">{{ item.1 }}</a></th>
         <th>{{ item.2 }}</th>
     </tr>
 {% endfor %}

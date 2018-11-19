@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+    <p><b>Task Description</b></p>
+    <p>{{ task_list.0 }}</p>
+    <p><b>Task Summary</b></p>
+    <p>{{ task_list.1 }}</p>
+    {% if task_list|length > 2 %}
+    <p><b>Answer</b></p>
+    <p>{{ task_list.2 }}</p>
+    <p><b>Comment</b></p>
+    <p>{{ task_list.3 }}</p>
+    <p><b>Confidence Level</b></p>
+    <p>{{ task_list.4 }}</p>
+    {% endif %}
+    {% if task_list|length > 5 %}
+    <p><b>Audit status</b></p>
+    <p>{{ task_list.5 }}</p>
+    {% endif %}
+    {% if task_list|length > 6 %}
+    <p><b>Audit review</b></p>
+    <p>{{ task_list.6 }}</p>
+    {% endif %}
+</div>
+{% endblock %}
