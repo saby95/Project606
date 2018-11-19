@@ -50,6 +50,9 @@ def detail(request, task_id):
         task = ResearchTasks.objects.get(pk=task_id)
     except ResearchTasks.DoesNotExist:
         raise Http404("Task does not exist")
+    if task.num_workers == 0:
+        messages.info(request, 'This task has already been claimed')
+        return HttpResponseRedirect('/')
     return render(request, 'tasks/detail.html', {'task': task, 'claim_permission': claim_permission})
 
 #Controller for adding Claiming Tasks
@@ -60,6 +63,10 @@ def claim(request, task_id):
         task = ResearchTasks.objects.get(pk=task_id)
     except ResearchTasks.DoesNotExist:
         raise Http404("Task does not exist")
+    tuj_count = TaskUserJunction.objects.filter(worker_id = user, task_id = task).count()
+    if tuj_count != 0:
+        messages.info(request, 'Permission Denied!! You already have claimed the task')
+        return HttpResponseRedirect('/')
     task.num_workers -= 1
     tuj = TaskUserJunction()
     tuj.worker_id = user
@@ -115,6 +122,9 @@ def answer(request, task_id):
             messages.info(request, 'Answer Added')
             return HttpResponseRedirect('/tasks/claimed/')
     else:
+        if tuj.answer != None:
+            messages.info(request, 'Answer already submitted')
+            return HttpResponseRedirect('/')
         form = AnswerForm()
     context = {
         'tuj': tuj,
@@ -246,14 +256,14 @@ def all_task_status(request):
     return render(request, 'tasks/all_task_status.html', {'mentor_dict': mentor_dict})
 
 @login_required
-def task_status(request, userid):
+def task_status(request, user_id):
     user = User.objects.get(username=request.user.username)
     profile = user.profile.role
     if profile != 'mentor' and profile != 'admin':
         messages.info(request, 'Permission Denied!! You do not have permission to access this page')
         return HttpResponseRedirect('/')
 
-    participants = Profile.objects.filter(mentor_id=userid)
+    participants = Profile.objects.filter(mentor_id=user_id)
     user_names = []
     for usr in participants:
         user = User.objects.get(id=usr.user_id)
@@ -266,15 +276,61 @@ def task_status(request, userid):
             except:
                 if_audit = 0
             if task.submission_time is None:
-                user_names.append([user.username, task_summary, 'claimed', task.task_id_id])
+                user_names.append([user.username, task_summary, 'claimed', task.task_id_id, user.id])
             elif task.submission_time is not None and if_audit == 0:
-                user_names.append([user.username, task_summary, 'finished without audit', task.task_id_id])
+                user_names.append([user.username, task_summary, 'finished without audit', task.task_id_id, user.id])
             elif task.submission_time is not None and if_audit == 1:
                 if task_audit.finish_time is None:
-                    user_names.append([user.username, task_summary, 'waiting for audit', task.task_id_id])
+                    user_names.append([user.username, task_summary, 'waiting for audit', task.task_id_id, user.id])
                 elif task_audit.task_correct == 1:
-                    user_names.append([user.username, task_summary, 'successful audit', task.task_id_id])
+                    user_names.append([user.username, task_summary, 'successful audit', task.task_id_id, user.id])
                 else:
-                    user_names.append([user.username, task_summary, 'failed audit', task.task_id_id])
+                    user_names.append([user.username, task_summary, 'failed audit', task.task_id_id, user.id])
 
     return render(request, 'tasks/task_status.html', {'user_names': user_names})
+
+
+@login_required
+def view_task(request, user_id, task_id):
+    user = User.objects.get(username=request.user.username)
+    profile = user.profile.role
+    if profile != 'mentor' and profile != 'admin':
+        messages.info(request, 'Permission Denied!! You do not have permission to access this page')
+        return HttpResponseRedirect('/')
+
+    tasks_claimed = TaskUserJunction.objects.get(worker_id_id=user_id, task_id_id=task_id)
+    task= ResearchTasks.objects.get(id=task_id)
+    if_audit = 1
+    try:
+        task_audit = Audit.objects.get(task_id_id=task_id)
+    except:
+        if_audit = 0
+
+    task_list=[]
+    task_list.append(task.task_desc)
+    task_list.append(task.task_summary)
+    if tasks_claimed.submission_time is not None:
+        task_list.append(tasks_claimed.answer)
+        task_list.append(tasks_claimed.comment)
+        if tasks_claimed.confidence_level == 1:
+            task_list.append('Poor')
+        elif tasks_claimed.confidence_level == 1:
+            task_list.append('Below average')
+        elif tasks_claimed.confidence_level == 1:
+            task_list.append('Average')
+        elif tasks_claimed.confidence_level == 1:
+            task_list.append('Above average')
+        else:
+            task_list.append('Good')
+
+    if if_audit == 1:
+        if task_audit.finish_time is None:
+            task_list.append('Under audit')
+        elif task_audit.task_correct == 1:
+            task_list.append('Successful audit')
+            task_list.append(task_audit.review)
+        else:
+            task_list.append('Failed audit')
+            task_list.append(task_audit.review)
+
+    return render(request, 'tasks/view_tasks.html', {'task_list': task_list})

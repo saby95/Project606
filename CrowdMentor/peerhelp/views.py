@@ -67,10 +67,27 @@ def ques_upvote(request, ques_id):
         ques = Question.objects.get(pk=ques_id)
     except Question.DoesNotExist:
         raise Http404("Question does not exist")
-    vote_exist = QuestionVotes.objects.filter(voter_id=user, question=ques, up_vote = True)
-    if  vote_exist:
-        messages.info(request, 'You already liked this')
-        return HttpResponseRedirect('/help/')
+    vote_exist = QuestionVotes.objects.get(voter_id=user, question=ques)
+    if vote_exist:
+        if vote_exist.up_vote:
+            vote_exist.up_vote = False
+            vote_exist.save()
+            ques.up_votes -= 1
+            ques.save()
+        else:
+            if vote_exist.down_vote:
+                vote_exist.down_vote = False
+                vote_exist.up_vote = True
+                vote_exist.save()
+                ques.down_votes -= 1
+                ques.up_votes += 1
+                ques.save()
+            else:
+                vote_exist.up_vote = True
+                vote_exist.save()
+                ques.up_votes += 1
+                ques.save()
+
     else:
         ques_votes = QuestionVotes()
         ques_votes.question = ques
@@ -88,10 +105,26 @@ def ans_upvote(request, ques_id, ans_id):
         ans = Answer.objects.get(pk=ans_id)
     except AnswerVotes.DoesNotExist:
         raise Http404("Question does not exist")
-    vote_exist = AnswerVotes.objects.filter(voter_id=user, answer=ans, up_vote = True)
-    if  vote_exist:
-        messages.info(request, 'You already liked this')
-        return HttpResponseRedirect('/help/'+str(ques_id)+'/')
+    vote_exist = AnswerVotes.objects.get(voter_id=user, answer=ans)
+    if vote_exist:
+        if vote_exist.up_vote:
+            vote_exist.up_vote = False
+            vote_exist.save()
+            ans.up_votes -= 1
+            ans.save()
+        else:
+            if vote_exist.down_vote:
+                vote_exist.down_vote = False
+                vote_exist.up_vote = True
+                vote_exist.save()
+                ans.down_votes -= 1
+                ans.up_votes += 1
+                ans.save()
+            else:
+                vote_exist.up_vote = True
+                vote_exist.save()
+                ans.up_votes += 1
+                ans.save()
     else:
         ans_votes = AnswerVotes()
         ans_votes.answer = ans
@@ -110,10 +143,26 @@ def ques_downvote(request, ques_id):
         ques = Question.objects.get(pk=ques_id)
     except Question.DoesNotExist:
         raise Http404("Question does not exist")
-    vote_exist = QuestionVotes.objects.filter(voter_id=user, question=ques, down_vote = True)
-    if  vote_exist:
-        messages.info(request, 'You already disliked this')
-        return HttpResponseRedirect('/help/')
+    vote_exist = QuestionVotes.objects.get(voter_id=user, question=ques)
+    if vote_exist:
+        if vote_exist.down_vote:
+            vote_exist.down_vote = False
+            vote_exist.save()
+            ques.down_votes -= 1
+            ques.save()
+        else:
+            if vote_exist.up_vote:
+                vote_exist.up_vote = False
+                vote_exist.down_vote = True
+                vote_exist.save()
+                ques.up_votes -= 1
+                ques.down_votes += 1
+                ques.save()
+            else:
+                vote_exist.down_vote = True
+                vote_exist.save()
+                ques.down_votes += 1
+                ques.save()
     else:
         ques_votes = QuestionVotes()
         ques_votes.question = ques
@@ -131,10 +180,26 @@ def ans_downvote(request, ques_id, ans_id):
         ans = Answer.objects.get(pk=ans_id)
     except Answer.DoesNotExist:
         raise Http404("Question does not exist")
-    vote_exist = AnswerVotes.objects.filter(voter_id=user, answer=ans, down_vote = True)
-    if  vote_exist:
-        messages.info(request, 'You already disliked this')
-        return HttpResponseRedirect('/help/'+str(ques_id)+'/')
+    vote_exist = AnswerVotes.objects.get(voter_id=user, answer=ans)
+    if vote_exist:
+        if vote_exist.down_vote:
+            vote_exist.down_vote = False
+            vote_exist.save()
+            ans.down_votes -= 1
+            ans.save()
+        else:
+            if vote_exist.up_vote:
+                vote_exist.up_vote = False
+                vote_exist.down_vote = True
+                vote_exist.save()
+                ans.up_votes -= 1
+                ans.down_votes += 1
+                ans.save()
+            else:
+                vote_exist.down_vote = True
+                vote_exist.save()
+                ans.down_votes += 1
+                ans.save()
     else:
         ans_votes = AnswerVotes()
         ans_votes.answer = ans
