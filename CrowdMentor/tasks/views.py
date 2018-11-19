@@ -63,6 +63,10 @@ def claim(request, task_id):
         task = ResearchTasks.objects.get(pk=task_id)
     except ResearchTasks.DoesNotExist:
         raise Http404("Task does not exist")
+    tuj_count = TaskUserJunction.objects.filter(worker_id = user, task_id = task).count()
+    if tuj_count != 0:
+        messages.info(request, 'Permission Denied!! You already have claimed the task')
+        return HttpResponseRedirect('/')
     task.num_workers -= 1
     tuj = TaskUserJunction()
     tuj.worker_id = user
