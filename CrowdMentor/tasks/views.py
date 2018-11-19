@@ -50,6 +50,9 @@ def detail(request, task_id):
         task = ResearchTasks.objects.get(pk=task_id)
     except ResearchTasks.DoesNotExist:
         raise Http404("Task does not exist")
+    if task.num_workers == 0:
+        messages.info(request, 'This task has already been claimed')
+        return HttpResponseRedirect('/')
     return render(request, 'tasks/detail.html', {'task': task, 'claim_permission': claim_permission})
 
 #Controller for adding Claiming Tasks
@@ -115,6 +118,9 @@ def answer(request, task_id):
             messages.info(request, 'Answer Added')
             return HttpResponseRedirect('/tasks/claimed/')
     else:
+        if tuj.answer != None:
+            messages.info(request, 'Answer already submitted')
+            return HttpResponseRedirect('/')
         form = AnswerForm()
     context = {
         'tuj': tuj,

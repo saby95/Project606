@@ -58,7 +58,7 @@ class TaskUserJunction(models.Model):
     task_id = models.ForeignKey(ResearchTasks, on_delete=models.DO_NOTHING)
     worker_id = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     claim_time = models.DateTimeField(auto_now_add=True)
-    answer = models.CharField(max_length=500, blank=True, null=True)
+    answer = models.CharField(max_length=500, null=True)
     submission_time = models.DateTimeField(blank=True, null=True)
     comment = models.CharField(max_length=500, blank=True, null=True)
     confidence_level = models.IntegerField(choices=CONFIDENCE, blank=True, null=True)
