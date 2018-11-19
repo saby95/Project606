@@ -67,7 +67,10 @@ def ques_upvote(request, ques_id):
         ques = Question.objects.get(pk=ques_id)
     except Question.DoesNotExist:
         raise Http404("Question does not exist")
-    vote_exist = QuestionVotes.objects.get(voter_id=user, question=ques)
+    try:
+        vote_exist = QuestionVotes.objects.get(voter_id=user, question=ques)
+    except QuestionVotes.DoesNotExist:
+        vote_exist = None
     if vote_exist:
         if vote_exist.up_vote:
             vote_exist.up_vote = False
@@ -105,7 +108,10 @@ def ans_upvote(request, ques_id, ans_id):
         ans = Answer.objects.get(pk=ans_id)
     except AnswerVotes.DoesNotExist:
         raise Http404("Question does not exist")
-    vote_exist = AnswerVotes.objects.get(voter_id=user, answer=ans)
+    try:
+        vote_exist = AnswerVotes.objects.get(voter_id=user, answer=ans)
+    except AnswerVotes.DoesNotExist:
+        vote_exist = None
     if vote_exist:
         if vote_exist.up_vote:
             vote_exist.up_vote = False
@@ -143,7 +149,10 @@ def ques_downvote(request, ques_id):
         ques = Question.objects.get(pk=ques_id)
     except Question.DoesNotExist:
         raise Http404("Question does not exist")
-    vote_exist = QuestionVotes.objects.get(voter_id=user, question=ques)
+    try:
+        vote_exist = QuestionVotes.objects.get(voter_id=user, question=ques)
+    except QuestionVotes.DoesnotExist:
+        vote_exist = None
     if vote_exist:
         if vote_exist.down_vote:
             vote_exist.down_vote = False
@@ -180,7 +189,10 @@ def ans_downvote(request, ques_id, ans_id):
         ans = Answer.objects.get(pk=ans_id)
     except Answer.DoesNotExist:
         raise Http404("Question does not exist")
-    vote_exist = AnswerVotes.objects.get(voter_id=user, answer=ans)
+    try:
+        vote_exist = AnswerVotes.objects.get(voter_id=user, answer=ans)
+    except AnswerVotes.DoesNotExist:
+        vote_exist = None
     if vote_exist:
         if vote_exist.down_vote:
             vote_exist.down_vote = False
