@@ -264,6 +264,7 @@ def task_status(request, user_id):
         return HttpResponseRedirect('/')
 
     participants = Profile.objects.filter(mentor_id=user_id)
+    #
     user_names = []
     for usr in participants:
         user = User.objects.get(id=usr.user_id)
