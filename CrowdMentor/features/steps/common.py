@@ -69,8 +69,4 @@ def step_impl(context):
     br.find_link_by_text("logout").first.click()
 
 
-from .tasks.models import ResearchTasks
-@given('I add a task to be audited')
-def step_impl(context):
-    r = ResearchTasks(audit_prob=0.99)
-    r.save()
+
