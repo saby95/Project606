@@ -151,7 +151,7 @@ def ques_downvote(request, ques_id):
         raise Http404("Question does not exist")
     try:
         vote_exist = QuestionVotes.objects.get(voter_id=user, question=ques)
-    except QuestionVotes.DoesnotExist:
+    except QuestionVotes.DoesNotExist:
         vote_exist = None
     if vote_exist:
         if vote_exist.down_vote:
