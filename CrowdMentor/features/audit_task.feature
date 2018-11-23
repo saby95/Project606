@@ -1,16 +1,11 @@
 Feature: Audit task
+    In order to make sure that the tasks are being completed correctly,
+    the auditor must be able to audit tasks once the worker completes them.
 
-  Background: A task that needs to be audited must exist
-    Given there is a task to be audited
-    
-  Scenario: Auditor must be able to audit the task
-    Given I am an existing user with auditor access
-    And I am logged in as the user with auditor access
-    Then I can claim the task for audit
-
-  Scenario: Auditor can audit a claimed task
-    Given I am an existing user with auditor access
-    And I am logged in as the user with auditor access
-    And I have claimed a task for audit
-    Then I can audit the task
-
+    Scenario: Auditor must be able to audit a task submitted for audit
+        Given there is a task to be audited
+        Given I am an existing user with auditor access
+        And I am logged in as the user with auditor access
+        Then I can claim the task for audit
+        And I can audit the task
+        

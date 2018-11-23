@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from .users.profile import Profile
 from .users.UserRoles import UserRoles
 
-# Home page is not correctly defined! So, we are checking to make sure that it is not the user login page.
 @then('I am redirected to the {webpage} page')
 def step_impl(context, webpage):
     br=context.browser
@@ -24,16 +23,6 @@ def step_impl(context):
     # Don't omit to call save() to insert object in database
     u.save()
 
-@given('I am an existing user with task updater access')
-def step_impl(context):
-    u = UserFactory(username='task_updater', email='tu@example.com')
-    u.set_password('bar')
-    u.save()
-    p = Profile.objects.get(user_id=u.id)
-    p.role = UserRoles.TASK_UPDATER.value
-    p.save()
-
-
 @given('I am mentoring that worker')
 def step_impl(context):
     w = User.objects.get(username='worker')
@@ -46,8 +35,6 @@ def step_impl(context):
 def step_impl(context, role):
     br = context.browser
     br.visit(context.base_url)
-
-    # Fill login form and submit it (valid version)
     br.fill('username', role)
     br.fill('password', 'bar')
     br.find_by_id('submit').first.click()

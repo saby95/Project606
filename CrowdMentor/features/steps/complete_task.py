@@ -6,6 +6,7 @@ from .tasks.models import ResearchTasks, TaskUserJunction
 def step_impl(context):
     r = ResearchTasks()
     r.save()
+    context.task = r
 
 @then('I can claim the task')
 def step_impl(context):
@@ -19,17 +20,16 @@ def step_impl(context):
 
 @given('I have claimed a task')
 def step_impl(context):
-    context.execute_steps(u'''
-                          given there is an open task
-                          then I can claim the task
-                          ''')
+    context.execute_steps(u'given there is an open task')
+    u = User.objects.get(username='worker')
+    tuj = TaskUserJunction(worker_id=u, task_id=context.task)
+    tuj.save()
 
 @then('I can complete the task')
 def step_impl(context):
-    u = User.objects.get(username='worker')
-    t = TaskUserJunction.objects.get(worker_id=u)
     br = context.browser
-    br.visit(context.base_url + '/tasks/claimed/' + str(t.id) + '/answer')
+    br.visit(context.base_url + '/tasks/claimed/' + str(context.task.id) +
+             '/answer')
     br.fill('answer', 'my awesome answer')
     br.find_by_id('submit').first.click()
     assert br.url.endswith('/tasks/claimed/')
