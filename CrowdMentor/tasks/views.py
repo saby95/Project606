@@ -315,11 +315,11 @@ def view_task(request, user_id, task_id):
         task_list.append(tasks_claimed.comment)
         if tasks_claimed.confidence_level == 1:
             task_list.append('Poor')
-        elif tasks_claimed.confidence_level == 1:
+        elif tasks_claimed.confidence_level == 2:
             task_list.append('Below average')
-        elif tasks_claimed.confidence_level == 1:
+        elif tasks_claimed.confidence_level == 3:
             task_list.append('Average')
-        elif tasks_claimed.confidence_level == 1:
+        elif tasks_claimed.confidence_level == 4:
             task_list.append('Above average')
         else:
             task_list.append('Good')
