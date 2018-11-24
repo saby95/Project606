@@ -3,7 +3,7 @@ import os
 
 import redis
 import urlparse
-
+from django.http import HttpResponse
 from django.utils import dateformat
 
 from privatemessages.models import Message

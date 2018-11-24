@@ -17,12 +17,23 @@ def step_impl(context):
     br.fill('message', 'Hello Mentor')
     br.find_by_id('submit').first.click()
 
+@when('I send an empty message to worker')
+def step_impl(context):
+    br = context.browser
+    br.visit(context.base_url + '/messages/')
+    br.find_by_id('submit').first.click()
+
 @when('the mentor sends a message to the worker')
 def step_impl(context):
     context.execute_steps(
         u'''when I send a message to worker
         given I logout'''
     )
+
+@then('I get error saying No message found')
+def step_impl(context):
+    br = context.browser
+    assert br.is_text_present('No message found.')
 
 @when('the worker sends a message to the mentor')
 def step_impl(context):
