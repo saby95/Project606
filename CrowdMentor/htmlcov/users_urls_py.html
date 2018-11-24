@@ -109,6 +109,22 @@
 <p id="n40" class="pln"><a href="#n40">40</a></p>
 <p id="n41" class="pln"><a href="#n41">41</a></p>
 <p id="n42" class="pln"><a href="#n42">42</a></p>
+<p id="n43" class="pln"><a href="#n43">43</a></p>
+<p id="n44" class="pln"><a href="#n44">44</a></p>
+<p id="n45" class="pln"><a href="#n45">45</a></p>
+<p id="n46" class="pln"><a href="#n46">46</a></p>
+<p id="n47" class="pln"><a href="#n47">47</a></p>
+<p id="n48" class="pln"><a href="#n48">48</a></p>
+<p id="n49" class="pln"><a href="#n49">49</a></p>
+<p id="n50" class="pln"><a href="#n50">50</a></p>
+<p id="n51" class="pln"><a href="#n51">51</a></p>
+<p id="n52" class="pln"><a href="#n52">52</a></p>
+<p id="n53" class="pln"><a href="#n53">53</a></p>
+<p id="n54" class="pln"><a href="#n54">54</a></p>
+<p id="n55" class="pln"><a href="#n55">55</a></p>
+<p id="n56" class="pln"><a href="#n56">56</a></p>
+<p id="n57" class="pln"><a href="#n57">57</a></p>
+<p id="n58" class="pln"><a href="#n58">58</a></p>
 
             </td>
             <td class="text">
@@ -141,8 +157,8 @@
 <p id="t27" class="pln"><span class="strut">&nbsp;</span></p>
 <p id="t28" class="pln">    <span class="com"># Login and Registration</span><span class="strut">&nbsp;</span></p>
 <p id="t29" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^$'</span><span class="op">,</span> <span class="nam">user</span><span class="op">.</span><span class="nam">view</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="str">'view'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
-<p id="t30" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^home/$'</span><span class="op">,</span> <span class="nam">user</span><span class="op">.</span><span class="nam">view</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="str">'view'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
-<p id="t31" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^login/$'</span><span class="op">,</span> <span class="nam">auth_views</span><span class="op">.</span><span class="nam">LoginView</span><span class="op">.</span><span class="nam">as_view</span><span class="op">(</span><span class="nam">template_name</span><span class="op">=</span><span class="str">"login.html"</span><span class="op">)</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="str">'login'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t30" class="pln">    <span class="com"># url(r'^home/$', user.view, name='view'),</span><span class="strut">&nbsp;</span></p>
+<p id="t31" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^login/$'</span><span class="op">,</span> <span class="nam">auth_views</span><span class="op">.</span><span class="nam">LoginView</span><span class="op">.</span><span class="nam">as_view</span><span class="op">(</span><span class="nam">template_name</span><span class="op">=</span><span class="str">"login.html"</span><span class="op">)</span><span class="op">,</span> <span class="op">{</span><span class="str">'next_page'</span><span class="op">:</span> <span class="str">'/'</span><span class="op">}</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="str">'login'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
 <p id="t32" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^logout/$'</span><span class="op">,</span> <span class="nam">auth_views</span><span class="op">.</span><span class="nam">logout</span><span class="op">,</span> <span class="op">{</span><span class="str">'next_page'</span><span class="op">:</span> <span class="str">'/'</span><span class="op">}</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="str">'logout'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
 <p id="t33" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^signup/$'</span><span class="op">,</span> <span class="nam">register</span><span class="op">.</span><span class="nam">signup</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="str">'signup'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
 <p id="t34" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^change_roles/$'</span><span class="op">,</span> <span class="nam">user</span><span class="op">.</span><span class="nam">change_roles</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="str">'change_roles'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
@@ -152,8 +168,24 @@
 <p id="t38" class="pln"><span class="strut">&nbsp;</span></p>
 <p id="t39" class="pln">    <span class="com">#For the tasks</span><span class="strut">&nbsp;</span></p>
 <p id="t40" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^tasks/'</span><span class="op">,</span> <span class="nam">include</span><span class="op">(</span><span class="str">'tasks.urls'</span><span class="op">)</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
-<p id="t41" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^messages/'</span><span class="op">,</span> <span class="nam">include</span><span class="op">(</span><span class="str">'privatemessages.urls'</span><span class="op">)</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
-<p id="t42" class="pln"><span class="op">]</span><span class="strut">&nbsp;</span></p>
+<p id="t41" class="pln"><span class="strut">&nbsp;</span></p>
+<p id="t42" class="pln">    <span class="com"># Chat</span><span class="strut">&nbsp;</span></p>
+<p id="t43" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^messages/'</span><span class="op">,</span> <span class="nam">include</span><span class="op">(</span><span class="str">'privatemessages.urls'</span><span class="op">)</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t44" class="pln"><span class="strut">&nbsp;</span></p>
+<p id="t45" class="pln">    <span class="com">#For the peerhelp</span><span class="strut">&nbsp;</span></p>
+<p id="t46" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^help/'</span><span class="op">,</span> <span class="nam">include</span><span class="op">(</span><span class="str">'peerhelp.urls'</span><span class="op">)</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t47" class="pln"><span class="strut">&nbsp;</span></p>
+<p id="t48" class="pln">    <span class="com"># Password Reset</span><span class="strut">&nbsp;</span></p>
+<p id="t49" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^password_reset/$'</span><span class="op">,</span> <span class="nam">auth_views</span><span class="op">.</span><span class="nam">PasswordResetView</span><span class="op">.</span><span class="nam">as_view</span><span class="op">(</span><span class="nam">template_name</span><span class="op">=</span><span class="str">"registration/password_reset_form.html"</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t50" class="pln">        <span class="nam">name</span><span class="op">=</span><span class="str">'password_reset'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t51" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^password_reset/done/$'</span><span class="op">,</span> <span class="nam">auth_views</span><span class="op">.</span><span class="nam">PasswordResetDoneView</span><span class="op">.</span><span class="nam">as_view</span><span class="op">(</span><span class="nam">template_name</span><span class="op">=</span><span class="str">"registration/password_reset_done.html"</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t52" class="pln">        <span class="nam">name</span><span class="op">=</span><span class="str">'password_reset_done'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t53" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^reset/(?P&lt;uidb64>[0-9A-Za-z_\-]+)/(?P&lt;token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$'</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t54" class="pln">        <span class="nam">auth_views</span><span class="op">.</span><span class="nam">PasswordResetConfirmView</span><span class="op">.</span><span class="nam">as_view</span><span class="op">(</span><span class="nam">template_name</span><span class="op">=</span><span class="str">"registration/password_reset_confirm.html"</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t55" class="pln">        <span class="nam">name</span><span class="op">=</span><span class="str">'password_reset_confirm'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t56" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^reset/done/$'</span><span class="op">,</span> <span class="nam">auth_views</span><span class="op">.</span><span class="nam">PasswordResetCompleteView</span><span class="op">.</span><span class="nam">as_view</span><span class="op">(</span><span class="nam">template_name</span><span class="op">=</span><span class="str">"registration/password_reset_complete.html"</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t57" class="pln">        <span class="nam">name</span><span class="op">=</span><span class="str">'password_reset_complete'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t58" class="pln"><span class="op">]</span><span class="strut">&nbsp;</span></p>
 
             </td>
         </tr>
@@ -164,7 +196,7 @@
     <div class="content">
         <p>
             <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v4.5.1</a>,
-            created at 2018-11-05 18:49
+            created at 2018-11-23 20:24
         </p>
     </div>
 </div>
