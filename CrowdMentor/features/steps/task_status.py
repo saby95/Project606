@@ -11,7 +11,7 @@ def step_impl(context):
 
 @given('the worker is assigned a task')
 def step_impl(context):
-    t = ResearchTasks(task_summary='Joe\'s task')
+    t = ResearchTasks(task_summary='Joe\'s task', audit_prob=1, audit_by=1)
     t.save()
     context.task = t
     tuj = TaskUserJunction(task_id=t, worker_id=context.worker)
@@ -32,3 +32,9 @@ def step_impl(context):
              + '/')
     assert br.is_text_present('Joe\'s task')
     assert br.is_text_present('claimed')
+
+@then('other details about the task')
+def step_impl(context):
+    br = context.browser
+    br.visit(context.base_url + '/tasks/view_task/' + str(context.worker.id) + '/' + str(context.task.id) + '/')
+    assert br.is_text_present('Task Description')

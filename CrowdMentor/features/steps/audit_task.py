@@ -8,10 +8,11 @@ def step_impl(context):
 
 @given('there is a task to be audited')
 def step_impl(context):
-    context.execute_steps(u'''given a task to be audited has been submitted
-                          given I am an existing user with worker access
-                          given I am logged in as the user with worker access
-                         ''')
+    context.execute_steps(
+        u'''given a task to be audited has been submitted
+        given I am an existing user with worker access
+        given I am logged in as the user with worker access
+        ''')
     # Task gets added to the tuj when the worker claims it.
     u = User.objects.get(username='worker')
     tuj = TaskUserJunction.objects.create(worker_id=u, task_id=context.task)

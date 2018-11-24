@@ -11,3 +11,5 @@ Scenario: A mentor should be able to see her workers' task status
     And I am logged in as the user with mentor access
     And I am mentoring the worker
     Then I can view the status of the worker's task
+    And other details about the task
+
