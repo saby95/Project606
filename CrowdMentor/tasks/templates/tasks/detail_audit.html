@@ -7,9 +7,8 @@
 Answer : {{tuj.answer}} <br />
 Confidence Level : {{tuj.confidence_level}} <br \>
 Comment : {{tuj.comment}} <br \>
-<a href="/tasks/open_audits/">{{ 'Back' }}</a>
-<a href="/">{{ 'Home' }}</a>
-<a href="/tasks/audits/{{ audit_task.task_id.id }}/claim_audit">Claim</a>
+<a href="/tasks/open_audits/" class="btn btn-secondary" role="button">{{ 'Back' }}</a>
+<a href="/tasks/audits/{{ audit_task.task_id.id }}/claim_audit" class="btn btn-success" role="button">Claim</a>
 {% endblock %}
 
 

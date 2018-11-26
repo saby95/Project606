@@ -65,7 +65,7 @@ def claim(request, task_id):
         raise Http404("Task does not exist")
     tuj_count = TaskUserJunction.objects.filter(worker_id = user, task_id = task).count()
     if tuj_count != 0:
-        messages.info(request, 'Permission Denied!! You already have claimed the task')
+        messages.warning(request, 'Permission Denied!! You already have claimed the task')
         return HttpResponseRedirect('/')
     task.num_workers -= 1
     tuj = TaskUserJunction()
@@ -82,7 +82,7 @@ def claimed_tasks(request):
     user = User.objects.get(username=request.user.username)
     profile = user.profile.role
     if profile != 'worker':
-        messages.info(request, 'Permission Denied!! You do not have permission to access this page')
+        messages.warning(request, 'Permission Denied!! You do not have permission to access this page')
         return HttpResponseRedirect('/')
     tuj_list =TaskUserJunction.objects.filter(worker_id = user)
     context = {
@@ -138,7 +138,7 @@ def open_audits(request):
     user = User.objects.get(username=request.user.username)
     profile = user.profile.role
     if profile != 'auditor':
-        messages.info(request, 'Permission Denied!! You do not have permission to access this page')
+        messages.warning(request, 'Permission Denied!! You do not have permission to access this page')
         return HttpResponseRedirect('/')
     audit_list = Audit.objects.filter(auditor_id=None)
     context = {
@@ -151,7 +151,7 @@ def detail_audit(request, task_id):
     user = User.objects.get(username=request.user.username)
     profile = user.profile.role
     if profile != 'auditor':
-        messages.info(request, 'Permission Denied!! You do not have permission to access this page')
+        messages.warning(request, 'Permission Denied!! You do not have permission to access this page')
         return HttpResponseRedirect('/')
     try:
         task = ResearchTasks.objects.get(pk=task_id)
@@ -166,7 +166,7 @@ def claim_audit(request, task_id):
     user = User.objects.get(username=request.user.username)
     profile = user.profile.role
     if profile != 'auditor':
-        messages.info(request, 'Permission Denied!! You do not have permission to access this page')
+        messages.warning(request, 'Permission Denied!! You do not have permission to access this page')
         return HttpResponseRedirect('/')
     try:
         task = ResearchTasks.objects.get(pk=task_id)
@@ -184,7 +184,7 @@ def audit_tasks(request):
     user = User.objects.get(username=request.user.username)
     profile = user.profile.role
     if profile != 'auditor':
-        messages.info(request, 'Permission Denied!! You do not have permission to access this page')
+        messages.warning(request, 'Permission Denied!! You do not have permission to access this page')
         return HttpResponseRedirect('/')
     audit_list =Audit.objects.filter(auditor_id = user)
     context = {
@@ -197,7 +197,7 @@ def submit_audit(request, task_id):
     user = User.objects.get(username=request.user.username)
     profile = user.profile.role
     if profile != 'auditor':
-        messages.info(request, 'Permission Denied!! You do not have permission to access this page')
+        messages.warning(request, 'Permission Denied!! You do not have permission to access this page')
         return HttpResponseRedirect('/')
     task = ResearchTasks.objects.get(pk=task_id)
     try:
@@ -244,7 +244,7 @@ def all_task_status(request):
     user = User.objects.get(username=request.user.username)
     profile = user.profile.role
     if profile != 'admin':
-        messages.info(request, 'Permission Denied!! You do not have permission to access this page')
+        messages.warning(request, 'Permission Denied!! You do not have permission to access this page')
         return HttpResponseRedirect('/')
 
     mentors = Profile.objects.filter(role='mentor')
@@ -260,7 +260,7 @@ def task_status(request, user_id):
     user = User.objects.get(username=request.user.username)
     profile = user.profile.role
     if profile != 'mentor' and profile != 'admin':
-        messages.info(request, 'Permission Denied!! You do not have permission to access this page')
+        messages.warning(request, 'Permission Denied!! You do not have permission to access this page')
         return HttpResponseRedirect('/')
 
     participants = Profile.objects.filter(mentor_id=user_id)
@@ -296,7 +296,7 @@ def view_task(request, user_id, task_id):
     user = User.objects.get(username=request.user.username)
     profile = user.profile.role
     if profile != 'mentor' and profile != 'admin':
-        messages.info(request, 'Permission Denied!! You do not have permission to access this page')
+        messages.warning(request, 'Permission Denied!! You do not have permission to access this page')
         return HttpResponseRedirect('/')
 
     tasks_claimed = TaskUserJunction.objects.get(worker_id_id=user_id, task_id_id=task_id)
