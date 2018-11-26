@@ -15,23 +15,28 @@ def view(request):
     if profile == UserRoles.TASK_UPDATER.value:
         dict_functs['/tasks/add_tasks']= 'Add task'
         dict_functs['/tasks/'] = 'View task'
+        dict_functs['/help/'] = 'Help'
 
     if profile == UserRoles.ADMIN.value:
         dict_functs['/change_roles'] = 'Change user roles'
         dict_functs['/tasks/all_task_status'] = 'See the status of all tasks'
+        dict_functs['/help/'] = 'Help'
 
     if profile == UserRoles.WORKER.value:
-        dict_functs['/tasks/claimed/'] = 'View claimed tasks'
-        dict_functs['/tasks/'] = 'View open tasks'
-        dict_functs['/messages/'] = 'View messages'
+        dict_functs['/tasks/claimed/'] = 'Claimed tasks'
+        dict_functs['/tasks/'] = 'Open tasks'
+        dict_functs['/messages/'] = 'Messages'
+        dict_functs['/help/'] = 'Help'
 
     if profile == UserRoles.AUDITOR.value:
-        dict_functs['/tasks/open_audits/'] = 'View open audits'
-        dict_functs['/tasks/audits/'] = 'View claimed audits'
+        dict_functs['/tasks/open_audits/'] = 'Open audits'
+        dict_functs['/tasks/audits/'] = 'Claimed audits'
+        dict_functs['/help/'] = 'Help'
 
     if profile == UserRoles.MENTOR.value:
-        dict_functs['/messages/'] = 'View messages'
-        dict_functs['/tasks/task_status/'+str(user_id)+'/'] = 'View task status'
+        dict_functs['/messages/'] = 'Messages'
+        dict_functs['/tasks/task_status/'+str(user_id)+'/'] = 'Task status'
+        dict_functs['/help/'] = 'Help'
 
     return render(request, 'home.html', {"profile": profile, "dict_functs" : dict_functs})
 
@@ -40,7 +45,7 @@ def change_roles(request):
     user = User.objects.get(username=request.user.username)
     profile = user.profile.role
     if profile != 'admin':
-        messages.info(request, 'Permission Denied!! You do not have permission to access this page')
+        messages.warning(request, 'Permission Denied!! You do not have permission to access this page')
         return HttpResponseRedirect('/')
 
     users = User.objects.all()

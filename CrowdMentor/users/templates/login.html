@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>Log in to My Site</h2>
+
+<div class="row centered-form center-block">
+  <div class="container col-md-3 col-md-offset-1">
+
   {% if form.errors %}
     <p id="error" style="color: red">Your username and password didn't match. Please try again.</p>
   {% endif %}
@@ -20,8 +23,10 @@
         {% endif %}
       </p>
     {% endfor %}
-    <button id='submit' type="submit">Log in</button>
+    <button id='submit' type="submit" class="btn btn-primary">Log in</button>
     <a href="{% url 'signup' %}">New to My Site? Sign up</a>
   </form>
 <a href="/password_reset">Forgot Password</a>
+  </div>
+</div>
 {% endblock %}

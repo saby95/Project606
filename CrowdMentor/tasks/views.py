@@ -27,7 +27,7 @@ def add_tasks(request):
     user = User.objects.get(username=request.user.username)
     profile = user.profile.role
     if profile != 'task_updater':
-        messages.info(request, 'Permission Denied!! You do not have permission to access this page')
+        messages.warning(request, 'Permission Denied!! You do not have permission to access this page')
         return HttpResponseRedirect('/')
     if request.method == 'POST':
         form = AddTaskForm(request.POST)

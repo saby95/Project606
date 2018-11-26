@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>Sign up</h2>
+<div class="row centered-form center-block">
+  <div class="container col-md-3 col-md-offset-1">
+
+  <div class="page-header">  <h3>Register</h3> </div>
+
   <form method="post">
     {% csrf_token %}
     {% for field in form %}
@@ -16,6 +20,16 @@
         {% endfor %}
       </p>
     {% endfor %}
-    <button id="id_signup" type="submit">Sign up</button>
+    <div class="d-flex">
+      <div>
+         <button id="id_signup" type="submit" class="btn btn-primary">Sign up</button>
+      </div>
+      <div class="ml-auto">
+         <a class="btn btn-danger" href="/" role="button">Cancel</a>
+      </div>
+ </div>
+
   </form>
+    </div>
+</div>
 {% endblock %}
