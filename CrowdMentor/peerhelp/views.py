@@ -70,6 +70,17 @@ def detail(request, ques_id):
             return HttpResponseRedirect(request.path_info)
     else:
         answers = Answer.objects.filter(question = ques)
+        try:
+            ques_vote = QuestionVotes.objects.get(question=ques,voter_id=user)
+        except QuestionVotes.DoesNotExist:
+            ques_vote = None
+        ques_up_down = {}
+        if ques_vote:
+            ques_up_down['upvote'] = ques_vote.up_vote
+            ques_up_down['downvote'] = ques_vote.down_vote
+        else:
+            ques_up_down['upvote'] = False
+            ques_up_down['downvote'] = False
         collections = []
         for answer in answers:
             try:
@@ -88,8 +99,8 @@ def detail(request, ques_id):
             collections.append(collection)
         form = AnswerForm()
     context = {
+            'ques_up_down': ques_up_down,
             'question':ques,
-            'answers': answers,
             'collections': collections,
             'form': form
         }
@@ -134,7 +145,7 @@ def ques_upvote(request, ques_id):
         ques_votes.save()
         ques.up_votes += 1
         ques.save()
-    return HttpResponseRedirect('/help')
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 @login_required
 def ans_upvote(request, ques_id, ans_id):
@@ -215,7 +226,7 @@ def ques_downvote(request, ques_id):
         ques_votes.save()
         ques.down_votes += 1
         ques.save()
-    return HttpResponseRedirect('/help')
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 @login_required
 def ans_downvote(request, ques_id, ans_id):
