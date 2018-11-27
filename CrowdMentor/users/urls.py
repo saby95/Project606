@@ -45,6 +45,9 @@ urlpatterns = [
     #For the peerhelp
     url(r'^help/', include('peerhelp.urls')),
 
+    # Broadcast
+    url(r'^broadcast/', include('broadcast.urls')),
+
     # Password Reset
     url(r'^password_reset/$', auth_views.PasswordResetView.as_view(template_name="registration/password_reset_form.html"),
         name='password_reset'),

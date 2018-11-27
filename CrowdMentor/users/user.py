@@ -7,36 +7,45 @@ from changeRolesForm import ChangeRolesForm
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 
+from broadcast.models import BroadcastMessages
+
 @login_required
 def view(request):
     user_id = User.objects.get(username=request.user.username).id
     profile = Profile.objects.get(user_id=user_id).role
+
+    broadcast_messages_count = BroadcastMessages.objects.filter(group_role=profile, claim=False).count()
     dict_functs={}
     if profile == UserRoles.TASK_UPDATER.value:
         dict_functs['/tasks/add_tasks']= 'Add task'
         dict_functs['/tasks/'] = 'View task'
         dict_functs['/help/'] = 'Help'
+        dict_functs['/broadcast/'] = 'Broadcast(' + str(broadcast_messages_count) + ')'
 
     if profile == UserRoles.ADMIN.value:
         dict_functs['/change_roles'] = 'Change Roles'
         dict_functs['/tasks/all_task_status'] = 'Mentor Status'
         dict_functs['/help/'] = 'Help'
+        dict_functs['/broadcast/'] = 'Broadcast(' + str(broadcast_messages_count) + ')'
 
     if profile == UserRoles.WORKER.value:
         dict_functs['/tasks/claimed/'] = 'Claimed tasks'
         dict_functs['/tasks/'] = 'Open tasks'
         dict_functs['/messages/'] = 'Messages'
         dict_functs['/help/'] = 'Help'
+        dict_functs['/broadcast/'] = 'Broadcast('+str(broadcast_messages_count)+')'
 
     if profile == UserRoles.AUDITOR.value:
         dict_functs['/tasks/open_audits/'] = 'Open Audits'
         dict_functs['/tasks/audits/'] = 'Claimed Audits'
         dict_functs['/help/'] = 'Help'
+        dict_functs['/broadcast/'] = 'Broadcast(' + str(broadcast_messages_count) + ')'
 
     if profile == UserRoles.MENTOR.value:
         dict_functs['/messages/'] = 'Messages'
         dict_functs['/tasks/task_status/'+str(user_id)+'/'] = 'Task Status'
         dict_functs['/help/'] = 'Help'
+        dict_functs['/broadcast/'] = 'Broadcast(' + str(broadcast_messages_count) + ')'
 
     return render(request, 'home.html', {"profile": profile, "dict_functs" : dict_functs})
 

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if broadcast_messages %}
+<h4 class="display-10">Broadcast Messages: </h4>
+{% for message in broadcast_messages %}
+<div class="alert alert-primary" role="alert">{{ message }}</div>
+
+{% endfor %}
+{% else %}
+    <p>No tasks are available.</p>
+{% endif %}
+{% endblock %}
