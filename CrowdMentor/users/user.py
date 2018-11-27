@@ -74,14 +74,33 @@ def change_roles(request):
     users = User.objects.all()
     if request.method == 'POST':
         for user in users:
-            id = 'role_'+str(user.id)
-            if 'Select' != request.POST.get(id):
-                user.profile.role = request.POST.get(id)
-                user.save()
+            id = user.id
+            if 'Select' != request.POST.get('role_'+str(id)):
+                user.profile.role = request.POST.get('role_'+str(id))
+            user.profile.salary = request.POST.get('salary_' + str(id))
+            user.profile.bonus = request.POST.get('bonus_' + str(id))
+            user.profile.fine = request.POST.get('fine_' + str(id))
+            user.profile.audit_prob_user = request.POST.get('audit_prob_' + str(id))
+
+            if request.POST.get('mantor_id_' + str(id)) > 0:
+                user.profile.mentor_id = request.POST.get('mantor_id_' + str(id))
+            user.save()
         return redirect('/')
     user_dict=dict()
+    user_dict_html = dict()
+    i=0
     for usr in users:
         prf = Profile.objects.get(user_id=usr.id)
-        user_dict[usr.id] = [usr.username, usr.email, prf.role]
+        if prf.mentor_id is not None:
+            user_dict[usr.id] = [usr.username, usr.email, prf.role, prf.salary, prf.bonus, prf.fine,
+                                 prf.audit_prob_user, prf.mentor_id]
+        else:
+            user_dict[usr.id] = [usr.username, usr.email, prf.role, prf.salary, prf.bonus, prf.fine,
+                                 prf.audit_prob_user,0]
+        user_dict_html[usr.id] = [usr.username, prf.role, i, i+1, i+2, i+3, i+4, i+5]
+        i=i+6
+
     form = ChangeRolesForm(users=user_dict)
-    return render(request, 'changeRoles.html', {'form': form, 'user_dict':user_dict})
+    return render(request, 'changeRoles.html', {'form': form, 'user_dict':user_dict_html})
+
+
