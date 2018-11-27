@@ -41,8 +41,8 @@ def view(request):
             dict_functs['/help/'] = 'Help'
             dict_functs['/broadcast/'] = 'Broadcast(' + str(broadcast_messages_count) + ')'
     else:
-        dict_functs['login'] = 'Login'
-        dict_functs['signup'] = 'Signup'
+        dict_functs['/login'] = 'Login'
+        dict_functs['/signup'] = 'Signup'
 
     return {"dict_functs" : dict_functs}
 

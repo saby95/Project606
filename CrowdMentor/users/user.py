@@ -20,13 +20,13 @@ def view(request):
     elif profile == UserRoles.MENTOR.value:
         workers = Profile.objects.filter(mentor_id=user_id)
         for worker in workers:
-            profile_val = user_details(worker.id)
+            profile_val = user_details(worker.user_id)
             dict_profile[profile_val['username']] = profile_val
     elif profile == UserRoles.ADMIN.value:
         workers = Profile.objects.all()
         for worker in workers:
             if worker.role == 'worker':
-                profile_val = user_details(worker.id)
+                profile_val = user_details(worker.user_id)
                 dict_profile[profile_val['username']] = profile_val
 
     return render(request, 'home.html', {"profile": profile, 'dict_profile': dict_profile})
