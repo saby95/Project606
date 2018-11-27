@@ -3,13 +3,16 @@
 import os
 import redis
 import urlparse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from privatemessages.models import Thread
 from users.profile import Profile
+from users.UserRoles import UserRoles
 from privatemessages.utils import send_message
+from broadcast.models import BroadcastMessages
 from django.contrib.auth.decorators import login_required
+from time import sleep
 
 @login_required
 def send_message_view(request):
@@ -84,19 +87,26 @@ def messages_view(request):
     #r = redis.StrictRedis(host='spinyfin.redistogo.com', port=10695, db=0, password='35461f89f6bb20899d7616def92dbd0a')
 
     user_id = request.user.id
+    updated_threads = []
     for thread in threads:
-        thread.partner = thread.participants.exclude(id=request.user.id)[0]
+        thread.partner = thread.participants.exclude(id=request.user.id)
+        if not thread.partner:
+            continue
+        else:
+            thread.partner = thread.partner[0]
 
         thread.total_messages = r.hget(
             "".join(["thread_", str(thread.id), "_messages"]),
             "total_messages"
         )
+        updated_threads.append(thread)
 
     return render(request, 'messages1/private_messages.html',
                               {
-                                  "threads": threads,
+                                  "threads": updated_threads,
                                   "chat_participants": chat_participants,
                               })
+
 @login_required
 def chat_view(request, thread_id):
     thread = get_object_or_404(
@@ -149,3 +159,32 @@ def chat_view(request, thread_id):
                                   "messages_received": messages_received,
                                   "partner": partner,
                               })
+
+
+@login_required
+def live_chat(request):
+    broadcast_id = request.POST.get("broadcast_id")
+    thread_id = request.POST.get("thread_id")
+    if not broadcast_id:
+        thread = Thread.objects.create()
+        thread.participants.add(request.user)
+        thread_id = thread.id
+
+        broadcast = BroadcastMessages.objects.create(broadcast_type='live-chat', group_role=UserRoles.MENTOR.value,
+                                                     broadcast_message='User ' + request.user.username + ' wants to chat')
+        broadcast_id = broadcast.id
+    else:
+        broadcast = get_object_or_404(BroadcastMessages, id=broadcast_id)
+        if broadcast.claim:
+            thread = get_object_or_404(Thread, id=thread_id, participants__id=request.user.id)
+            claiming_user = User.objects.get(id=broadcast.claim_by.id)
+            thread.participants.add(claiming_user)
+            return redirect('chat_view', thread_id=thread_id)
+        else:
+            sleep(5)    # Wait/Sleep for sometime
+
+    return render(request, 'messages1/live.html',
+                  {
+                      "thread_id": thread_id,
+                      "broadcast_id": broadcast_id,
+                  })
