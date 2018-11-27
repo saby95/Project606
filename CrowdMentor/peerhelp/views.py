@@ -13,9 +13,27 @@ from .forms import QuestionForm, AnswerForm
 
 @login_required
 def index(request):
+    user = User.objects.get(username=request.user.username)
     questions = Question.objects.all()
+    collections = []
+    for question in questions:
+        try:
+            ques_vote = QuestionVotes.objects.get(question=question,voter_id=user)
+        except QuestionVotes.DoesNotExist:
+            ques_vote = None
+        collection = {}
+        if ques_vote:
+            collection['question'] = question
+            collection['upvote'] = ques_vote.up_vote
+            collection['downvote'] = ques_vote.down_vote
+        else:
+            collection['question'] = question
+            collection['upvote'] = False
+            collection['downvote'] = False
+        collections.append(collection)
+
     context = {
-            'questions': questions,
+            'collections': collections,
         }
     return render(request, 'questions/index.html', context)
 
@@ -52,10 +70,38 @@ def detail(request, ques_id):
             return HttpResponseRedirect(request.path_info)
     else:
         answers = Answer.objects.filter(question = ques)
+        try:
+            ques_vote = QuestionVotes.objects.get(question=ques,voter_id=user)
+        except QuestionVotes.DoesNotExist:
+            ques_vote = None
+        ques_up_down = {}
+        if ques_vote:
+            ques_up_down['upvote'] = ques_vote.up_vote
+            ques_up_down['downvote'] = ques_vote.down_vote
+        else:
+            ques_up_down['upvote'] = False
+            ques_up_down['downvote'] = False
+        collections = []
+        for answer in answers:
+            try:
+                ans_vote = AnswerVotes.objects.get(answer=answer,voter_id=user)
+            except AnswerVotes.DoesNotExist:
+                ans_vote = None
+            collection = {}
+            if ans_vote:
+                collection['answer'] = answer
+                collection['upvote'] = ans_vote.up_vote
+                collection['downvote'] = ans_vote.down_vote
+            else:
+                collection['answer'] = answer
+                collection['upvote'] = False
+                collection['downvote'] = False
+            collections.append(collection)
         form = AnswerForm()
     context = {
+            'ques_up_down': ques_up_down,
             'question':ques,
-            'answers': answers,
+            'collections': collections,
             'form': form
         }
     return render(request, 'questions/detail.html', context)
@@ -99,7 +145,7 @@ def ques_upvote(request, ques_id):
         ques_votes.save()
         ques.up_votes += 1
         ques.save()
-    return HttpResponseRedirect('/help')
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 @login_required
 def ans_upvote(request, ques_id, ans_id):
@@ -180,7 +226,7 @@ def ques_downvote(request, ques_id):
         ques_votes.save()
         ques.down_votes += 1
         ques.save()
-    return HttpResponseRedirect('/help')
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 @login_required
 def ans_downvote(request, ques_id, ans_id):
