@@ -6,11 +6,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from datetime import datetime
 from django.contrib import messages
+from users.profile import Profile
 
 from .models import ResearchTasks, TaskUserJunction, Audit
 
 from .forms import AddTaskForm, AnswerForm, AuditForm
-from users.profile import Profile
 
 #Controller for View Open tasks
 @login_required
@@ -262,12 +262,16 @@ def task_status(request, user_id):
     if profile != 'mentor' and profile != 'admin':
         messages.warning(request, 'Permission Denied!! You do not have permission to access this page')
         return HttpResponseRedirect('/')
+    admin_permission = False
+    if profile == 'admin':
+        admin_permission = True
 
     participants = Profile.objects.filter(mentor_id=user_id)
     #
     user_names = []
     for usr in participants:
         user = User.objects.get(id=usr.user_id)
+
         tasks_claimed = TaskUserJunction.objects.filter(worker_id_id=usr.user_id)
         for task in tasks_claimed:
             task_summary = ResearchTasks.objects.get(id=task.task_id_id).task_summary
@@ -277,18 +281,18 @@ def task_status(request, user_id):
             except:
                 if_audit = 0
             if task.submission_time is None:
-                user_names.append([user.username, task_summary, 'claimed', task.task_id_id, user.id])
+                user_names.append([user.username, task_summary, 'claimed', task.task_id_id, user.id, 'warning'])
             elif task.submission_time is not None and if_audit == 0:
-                user_names.append([user.username, task_summary, 'finished without audit', task.task_id_id, user.id])
+                user_names.append([user.username, task_summary, 'finished without audit', task.task_id_id, user.id, 'primary'])
             elif task.submission_time is not None and if_audit == 1:
                 if task_audit.finish_time is None:
-                    user_names.append([user.username, task_summary, 'waiting for audit', task.task_id_id, user.id])
+                    user_names.append([user.username, task_summary, 'waiting for audit', task.task_id_id, user.id, 'secondary'])
                 elif task_audit.task_correct == 1:
-                    user_names.append([user.username, task_summary, 'successful audit', task.task_id_id, user.id])
+                    user_names.append([user.username, task_summary, 'successful audit', task.task_id_id, user.id, 'success'])
                 else:
-                    user_names.append([user.username, task_summary, 'failed audit', task.task_id_id, user.id])
+                    user_names.append([user.username, task_summary, 'failed audit', task.task_id_id, user.id, 'danger'])
 
-    return render(request, 'tasks/task_status.html', {'user_names': user_names})
+    return render(request, 'tasks/task_status.html', {'user_names': user_names, 'admin_permission': admin_permission})
 
 
 @login_required
@@ -334,4 +338,4 @@ def view_task(request, user_id, task_id):
             task_list.append('Failed audit')
             task_list.append(task_audit.review)
 
-    return render(request, 'tasks/view_tasks.html', {'task_list': task_list})
+    return render(request, 'tasks/view_tasks.html', {'task_list': task_list, 'user_id': user.id})

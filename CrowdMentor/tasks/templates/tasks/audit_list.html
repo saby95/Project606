@@ -2,6 +2,7 @@
 
 {% block content %}
 {% if audit_list %}
+<h4 class="display-10">Tasks to audit: </h4>
     <ul>
     {% for task in audit_list %}
         {% if task.task_correct is None%}
@@ -15,6 +16,4 @@
     <p>No tasks are available.</p>
 {% endif %}
 
-
-<a href="/">{{ 'Back' }}</a>
 {% endblock %}

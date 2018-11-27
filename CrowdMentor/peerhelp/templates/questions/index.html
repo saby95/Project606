@@ -1,17 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="row centered-form center-block">
+  <div class="container col-md-3 col-md-offset-1">
+<a href="/help/add_ques/" class="btn btn-primary" role="button">Add Question</a></br></br></br>
+  </div>
+</div>
 {% if questions %}
-    <ul>
     {% for ques in questions %}
-        <li><a href="/help/{{ ques.id }}/">{{ ques.question_summary }}</a> </br> by {{ques.creator_id}} at
+        <div class="jumbotron">
+        <a href="/help/{{ ques.id }}/">{{ ques.question_summary }}</a> </br> by {{ques.creator_id}} at
             {{ques.creation_time}} </br>  {{ques.up_votes}} <a href="/help/{{ ques.id }}/upvote">Upvote</a>
-            {{ques.down_votes}} <a href="/help/{{ ques.id }}/downvote">Downvote</a></li>
+            {{ques.down_votes}} <a href="/help/{{ ques.id }}/downvote">Downvote</a>
+        </div>
     {% endfor %}
     </ul>
 {% else %}
     <p>No questions are available.</p>
 {% endif %}
-<a href="/help/add_ques/">Add Question</a></br>
-<a href="/">{{ 'Back' }}</a>
+
 {% endblock %}

@@ -32,7 +32,7 @@ DEBUG = True
 #DEBUG = False
 #ENVIRONMENT = 'production'
 #ALLOWED_HOSTS = ['localhost', '127.0.0.1', '823017eb886440b68e431a9d07031dc7.vfs.cloud9.us-east-2.amazonaws.com']
-ALLOWED_HOSTS = ['127.0.0.1', 'lit-wildwood-12573.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'crowd-mentor.herokuapp.com', 'localhost']
 
 # Application definition
 
@@ -147,7 +147,7 @@ LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'home'
 # Only for testing Comment while deploying
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 #For production. Uncomment while deployment
 # EMAIL_HOST = 'smtp.sendgrid.net'
@@ -165,9 +165,7 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
-STATICFILES_DIRS = [
-    os.path.join(PROJECT_ROOT, 'static'),
-]
+#STATICFILES_DIRS = (    os.path.join(PROJECT_ROOT, 'static'),)
 
 #When pushing to heroku "Uncomment this "
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

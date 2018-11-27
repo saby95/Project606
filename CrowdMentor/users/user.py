@@ -18,8 +18,8 @@ def view(request):
         dict_functs['/help/'] = 'Help'
 
     if profile == UserRoles.ADMIN.value:
-        dict_functs['/change_roles'] = 'Change user roles'
-        dict_functs['/tasks/all_task_status'] = 'See the status of all tasks'
+        dict_functs['/change_roles'] = 'Change Roles'
+        dict_functs['/tasks/all_task_status'] = 'Mentor Status'
         dict_functs['/help/'] = 'Help'
 
     if profile == UserRoles.WORKER.value:
@@ -29,13 +29,13 @@ def view(request):
         dict_functs['/help/'] = 'Help'
 
     if profile == UserRoles.AUDITOR.value:
-        dict_functs['/tasks/open_audits/'] = 'Open audits'
-        dict_functs['/tasks/audits/'] = 'Claimed audits'
+        dict_functs['/tasks/open_audits/'] = 'Open Audits'
+        dict_functs['/tasks/audits/'] = 'Claimed Audits'
         dict_functs['/help/'] = 'Help'
 
     if profile == UserRoles.MENTOR.value:
         dict_functs['/messages/'] = 'Messages'
-        dict_functs['/tasks/task_status/'+str(user_id)+'/'] = 'Task status'
+        dict_functs['/tasks/task_status/'+str(user_id)+'/'] = 'Task Status'
         dict_functs['/help/'] = 'Help'
 
     return render(request, 'home.html', {"profile": profile, "dict_functs" : dict_functs})

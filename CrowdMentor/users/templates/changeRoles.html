@@ -1,25 +1,40 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h2>Welcome, admin!</h2>
-    <div style="width:30%">
-        <div style="float:left">
-            <div style="float:left; width:33%; height:32px">Userid</div>
-            <div style="float:right; width:33%; height:32px">User role</div>
-            <div style="float:right; width:33%; height:32px"> Email</div><br>
-            {% for key, value in user_dict.items %}
-            <div style="float:left; width:33%; height:35px">{{ value.0 }} </div>
-            <div style="float:left; width:33%; height:35px">{{ value.2 }} </div>
-            <div style="float:right; width:33%; height:35px"> {{ value.1 }}</div><br>
-            {% endfor %}
-        </div>
-        <div style="float:right; height:25px">
-            <div style="float:left; width:70%; height:32px">New role</div>
+<h4>Welcome, admin!</h4>
+
+<div class="container">
+<div class="d-flex">
+      <div>
+
+          <table class="table table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email ID</th>
+                    <th scope="col">User Roles</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key, value in user_dict.items %}
+                    <tr>
+                        <th>{{ value.0 }}</th>
+                        <th>{{ value.1 }}</th>
+                        <th>{{ value.2 }}</th>
+                    </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+
+      </div>
+      <div class="ml-auto">
+         <div style="float:left; width:70%; height:32px"><b>New Role</b></div>
             <form method="post">
                 {% csrf_token %}
                 {{form.as_p}}
-                <button type="submit" id="id_change_role">Update</button>
+                <button type="submit" id="id_change_role" class="btn btn-danger">Update</button>
             </form>
-        </div>
+      </div>
     </div>
+</div>
 
 {% endblock %}

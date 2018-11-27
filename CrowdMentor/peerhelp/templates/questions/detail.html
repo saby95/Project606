@@ -1,23 +1,36 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{{question.question_summary}} </br>
-{{question.question_desc}}
+<div class="jumbotron">
+    <h3 class="display-6">{{question.question_summary}}</h3>
+    <p class="lead">{{question.question_desc}}</p>
+</div>
+
 {% if answers %}
-    <ul>
     {% for ans in answers %}
-        <li>{{ans}} </br> by {{ans.creator_id}} at
+        <div class="jumbotron">
+        {{ans}} </br> by {{ans.creator_id}} at
             {{ans.creation_time}} </br> {{ans.up_votes}} <a href="/help/{{ question.id }}/{{ans.id}}/upvote">Upvote</a>
-            {{ans.down_votes}} <a href="/help/{{ question.id }}/{{ans.id}}/downvote">Downvote</a></li>
+            {{ans.down_votes}} <a href="/help/{{ question.id }}/{{ans.id}}/downvote">Downvote</a>
+        </div>
     {% endfor %}
     </ul>
 {% else %}
     <p>No answers are available.</p>
 {% endif %}
+<div class="jumbotron">
+    <p class="lead">Submit answer</p>
 <form method="post">
     {% csrf_token %}
-    {{form.as_p}}
-    <button id="id_add_answer" type="submit">Submit</button>
+    {{form}}
+    <button id="id_add_answer" type="submit" class="btn btn-primary" role="button">Submit</button>
 </form>
-<a href="/help/">{{ 'Back' }}</a>
+</div>
+
+<div class="row centered-form center-block">
+  <div class="container col-md-3 col-md-offset-1">
+        <a href="/help/" class="btn btn-secondary" role="button">Back</a>
+  </div>
+</div>
+
 {% endblock %}
