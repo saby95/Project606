@@ -18,8 +18,7 @@ def index(request):
     return render(request, 'broadcast/index.html', context)
 
 @login_required
-def claim_broadcast(request):
-    broadcast_id = request.POST.get("broadcast_id")
+def claim(request, broadcast_id):
     broadcast = get_object_or_404(BroadcastMessages, id=broadcast_id)
     broadcast.claim = True
     broadcast.claim_by = request.user

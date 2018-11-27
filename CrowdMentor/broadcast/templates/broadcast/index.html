@@ -4,17 +4,11 @@
 {% if broadcast_messages %}
 <h4 class="display-10">Broadcast Messages: </h4>
 {% for message in broadcast_messages %}
-<div class="alert alert-primary" role="alert">
-    {{ message }}
-    <div>
-        <form action="{% url 'claim_broadcast' %}" method="post">
-        {% csrf_token %}
-        <input type="hidden" name="broadcast_id" value={{ message.id }}>
-        <p><input type="submit" value="Claim"></p>
-    </form>
+<div class="container">
+    <div class="alert alert-primary" role="alert">
+        {{ message }} &emsp;&emsp;&emsp; <a href="/broadcast/{{message.id}}/claim" class="btn btn-primary" role="button">Claim</a>
     </div>
 </div>
-
 {% endfor %}
 {% else %}
     <p>No Broadcasts are available.</p>
