@@ -2,10 +2,53 @@
 
 {% block content %}
 
-<div class="page-header">
+<div class="page-header" style="float:left">
   <h2>Welcome {{ user.get_full_name }}! <br> <small>Role: {{ profile }}</small></h2>
+    <h3>Total Salary: ${{user.profile.total_salary}}</h3><br>
 </div>
 
-<h3>Total Salary: ${{user.profile.total_salary}}</h3><br>
+<div class="jumbotron" style="float:right">
+    {% for key, value in dict_profile.items %}
+    <h4 class="display-6">{{ key }}
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        </button>
+    </h4>
+    <div style="display:block">
+    <h6>First name</h6>
+    <p>{{ value.fname }}</p>
+    <h6>Last name</h6>
+    <p>{{ value.lname }}</p>
+    <h6>Username</h6>
+    <p>{{ value.username }}</p>
+    <h6>Rols</h6>
+    <p>{{ value.role }}</p>
+    <h6>Birthdate</h6>
+    <p>{{ value.bdate }}</p>
+
+    <hr class="my-4">
+
+    <h6>Salary</h6>
+    <p>{{ value.salary }}</p>
+    <h6>Bonus</h6>
+    <p>{{ value.bonus }}</p>
+    <h6>Fine</h6>
+    <p>{{ value.fine }}</p>
+
+    <hr class="my-4">
+
+    <h6>Claimed tasks</h6>
+    <p>{{ value.claimed }}</p>
+    <h6>Finished tasks</h6>
+    <p>{{ value.finished }}</p>
+    <h6>Total hours worked</h6>
+    <p>{{ value.worked }}</p>
+    <h6>Average hoours worked</h6>
+    <p>{{ value.avgworked }}</p>
+
+    <hr class="my-4">
+    </div>
+    {% endfor %}
+
+</div>
 
 {% endblock %}

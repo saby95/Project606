@@ -6,48 +6,62 @@ from UserRoles import UserRoles
 from changeRolesForm import ChangeRolesForm
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-
-from broadcast.models import BroadcastMessages
+import datetime
+from tasks.models import TaskUserJunction
 
 @login_required
 def view(request):
     user_id = User.objects.get(username=request.user.username).id
     profile = Profile.objects.get(user_id=user_id).role
 
-    broadcast_messages_count = BroadcastMessages.objects.filter(group_role=profile, claim=False).count()
-    dict_functs={}
-    if profile == UserRoles.TASK_UPDATER.value:
-        dict_functs['/tasks/add_tasks']= 'Add task'
-        dict_functs['/tasks/'] = 'View task'
-        dict_functs['/help/'] = 'Help'
-        dict_functs['/broadcast/'] = 'Broadcast(' + str(broadcast_messages_count) + ')'
-
-    if profile == UserRoles.ADMIN.value:
-        dict_functs['/change_roles'] = 'Change Roles'
-        dict_functs['/tasks/all_task_status'] = 'Mentor Status'
-        dict_functs['/help/'] = 'Help'
-        dict_functs['/broadcast/'] = 'Broadcast(' + str(broadcast_messages_count) + ')'
-
+    dict_profile = {}
     if profile == UserRoles.WORKER.value:
-        dict_functs['/tasks/claimed/'] = 'Claimed tasks'
-        dict_functs['/tasks/'] = 'Open tasks'
-        dict_functs['/messages/'] = 'Messages'
-        dict_functs['/help/'] = 'Help'
-        dict_functs['/broadcast/'] = 'Broadcast('+str(broadcast_messages_count)+')'
+        dict_profile[request.user.username] = user_details(user_id)
+    elif profile == UserRoles.MENTOR.value:
+        workers = Profile.objects.filter(mentor_id=user_id)
+        for worker in workers:
+            profile_val = user_details(worker.id)
+            dict_profile[profile_val['username']] = profile_val
+    elif profile == UserRoles.ADMIN.value:
+        workers = Profile.objects.all()
+        for worker in workers:
+            if worker.role == 'worker':
+                profile_val = user_details(worker.id)
+                dict_profile[profile_val['username']] = profile_val
 
-    if profile == UserRoles.AUDITOR.value:
-        dict_functs['/tasks/open_audits/'] = 'Open Audits'
-        dict_functs['/tasks/audits/'] = 'Claimed Audits'
-        dict_functs['/help/'] = 'Help'
-        dict_functs['/broadcast/'] = 'Broadcast(' + str(broadcast_messages_count) + ')'
+    return render(request, 'home.html', {"profile": profile, 'dict_profile': dict_profile})
 
-    if profile == UserRoles.MENTOR.value:
-        dict_functs['/messages/'] = 'Messages'
-        dict_functs['/tasks/task_status/'+str(user_id)+'/'] = 'Task Status'
-        dict_functs['/help/'] = 'Help'
-        dict_functs['/broadcast/'] = 'Broadcast(' + str(broadcast_messages_count) + ')'
+def user_details(user_id):
+    dict_profile = {}
+    user = User.objects.get(id=user_id)
+    tasks = TaskUserJunction.objects.filter(worker_id_id=user_id)
+    dict_profile['fname'] = user.first_name
+    dict_profile['lname'] = user.last_name
+    dict_profile['username'] = user.username
+    dict_profile['role'] = user.email
+    dict_profile['bdate'] = user.profile.birth_date
+    dict_profile['salary'] = user.profile.salary
+    dict_profile['bonus'] = user.profile.bonus
+    dict_profile['fine'] = user.profile.fine
 
-    return render(request, 'home.html', {"profile": profile, "dict_functs" : dict_functs})
+    total_task = 0
+    task_in_progress = 0
+    time_worked = datetime.datetime.now()
+    for task in tasks:
+        total_task = total_task + 1
+        if task.submission_time is None:
+            task_in_progress = task_in_progress + 1
+        else:
+            time_worked = time_worked + (task.submission_time - task.claim_time)
+    dict_profile['claimed'] = total_task
+    dict_profile['finished'] = (total_task - task_in_progress)
+    dict_profile['worked'] = max((time_worked-datetime.datetime.now()).total_seconds()/3600,0)
+    try:
+        dict_profile['avgworked'] = (dict_profile['worked'] / dict_profile['finished'])
+    except:
+        dict_profile['avgworked'] = 0
+
+    return dict_profile
 
 @login_required
 def change_roles(request):
