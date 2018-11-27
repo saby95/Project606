@@ -13,9 +13,27 @@ from .forms import QuestionForm, AnswerForm
 
 @login_required
 def index(request):
+    user = User.objects.get(username=request.user.username)
     questions = Question.objects.all()
+    collections = []
+    for question in questions:
+        try:
+            ques_vote = QuestionVotes.objects.get(question=question,voter_id=user)
+        except QuestionVotes.DoesNotExist:
+            ques_vote = None
+        collection = {}
+        if ques_vote:
+            collection['question'] = question
+            collection['upvote'] = ques_vote.up_vote
+            collection['downvote'] = ques_vote.down_vote
+        else:
+            collection['question'] = question
+            collection['upvote'] = False
+            collection['downvote'] = False
+        collections.append(collection)
+
     context = {
-            'questions': questions,
+            'collections': collections,
         }
     return render(request, 'questions/index.html', context)
 
@@ -52,10 +70,27 @@ def detail(request, ques_id):
             return HttpResponseRedirect(request.path_info)
     else:
         answers = Answer.objects.filter(question = ques)
+        collections = []
+        for answer in answers:
+            try:
+                ans_vote = AnswerVotes.objects.get(answer=answer,voter_id=user)
+            except AnswerVotes.DoesNotExist:
+                ans_vote = None
+            collection = {}
+            if ans_vote:
+                collection['answer'] = answer
+                collection['upvote'] = ans_vote.up_vote
+                collection['downvote'] = ans_vote.down_vote
+            else:
+                collection['answer'] = answer
+                collection['upvote'] = False
+                collection['downvote'] = False
+            collections.append(collection)
         form = AnswerForm()
     context = {
             'question':ques,
             'answers': answers,
+            'collections': collections,
             'form': form
         }
     return render(request, 'questions/detail.html', context)

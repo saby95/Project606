@@ -6,18 +6,46 @@
     <p class="lead">{{question.question_desc}}</p>
 </div>
 
-{% if answers %}
-    {% for ans in answers %}
-        <div class="jumbotron">
-        {{ans}} </br> by {{ans.creator_id}} at
-            {{ans.creation_time}} </br> {{ans.up_votes}} <a href="/help/{{ question.id }}/{{ans.id}}/upvote">Upvote</a>
-            {{ans.down_votes}} <a href="/help/{{ question.id }}/{{ans.id}}/downvote">Downvote</a>
-        </div>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No answers are available.</p>
-{% endif %}
+<!--{% if answers %}-->
+    <!--{% for ans in answers %}-->
+        <!--<div class="jumbotron">-->
+        <!--{{ans}} </br> by {{ans.creator_id}} at-->
+            <!--{{ans.creation_time}} </br> {{ans.up_votes}} <a href="/help/{{ question.id }}/{{ans.id}}/upvote"><i class="fa fa-thumbs-up" aria-hidden="true"></i></a>-->
+            <!--{{ans.down_votes}} <a href="/help/{{ question.id }}/{{ans.id}}/downvote"><i class="fa fa-thumbs-down" aria-hidden="true"></i></a>-->
+        <!--</div>-->
+    <!--{% endfor %}-->
+    <!--</ul>-->
+<!--{% else %}-->
+    <!--<p>No answers are available.</p>-->
+<!--{% endif %}-->
+
+
+    {%if collections%}
+         {% for collection in collections %}
+            <div class="jumbotron">
+                {{ collection.answer }}</a> </br> by
+                {{collection.answer.creator_id}} at {{collection.answer.creation_time}} </br>  {{collection.answer.up_votes}}
+                {% if collection.upvote %}
+                    <a href="/help/{{ question.id }}/{{collection.answer.id}}/upvote"><i class="fa fa-thumbs-up" aria-hidden="true"></i></a>
+                {% else %}
+                    <a href="/help/{{ question.id }}/{{collection.answer.id}}/upvote"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a>
+                {% endif %}
+                {{collection.answer.down_votes}}
+                {% if collection.downvote %}
+                    <a href="/help/{{ question.id }}/{{collection.answer.id}}/downvote"><i class="fa fa-thumbs-down" aria-hidden="true"></i></a>
+                {% else %}
+                    <a href="/help/{{ question.id }}/{{collection.answer.id}}/downvote"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i></a>
+                {% endif %}
+            </div>
+         {% endfor %}
+
+    {% else %}
+        <p>No questions are available.</p>
+    {% endif %}
+
+
+
+
 <div class="jumbotron">
     <p class="lead">Submit answer</p>
 <form method="post">
