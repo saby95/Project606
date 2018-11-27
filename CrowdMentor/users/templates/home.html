@@ -1,7 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+<script type="text/javascript">
+function showDiv(x){
+    if (x.style.display === 'none') {
+        x.style.display = 'block';
+    } else {
+        x.style.display = 'none';
+    }
+}
+</script>
 <div class="page-header" style="float:left">
   <h2>Welcome {{ user.get_full_name }}! <br> <small>Role: {{ profile }}</small></h2>
     <h3>Total Salary: ${{user.profile.total_salary}}</h3><br>
@@ -10,10 +18,10 @@
 <div class="jumbotron" style="float:right">
     {% for key, value in dict_profile.items %}
     <h4 class="display-6">{{ key }}
-        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" onclick="showDiv({{ value.username }})">
         </button>
     </h4>
-    <div style="display:block">
+    <div id="{{ value.username }}" style="display:none">
     <h6>First name</h6>
     <p>{{ value.fname }}</p>
     <h6>Last name</h6>
