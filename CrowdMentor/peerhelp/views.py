@@ -26,12 +26,14 @@ def index(request):
             collection['question'] = question
             collection['upvote'] = ques_vote.up_vote
             collection['downvote'] = ques_vote.down_vote
+            collection['creation_time'] = question.creation_time
         else:
             collection['question'] = question
             collection['upvote'] = False
             collection['downvote'] = False
+            collection['creation_time'] = question.creation_time
         collections.append(collection)
-
+    collections.sort(key=lambda item: item['creation_time'], reverse=True)
     context = {
             'collections': collections,
         }
@@ -92,12 +94,15 @@ def detail(request, ques_id):
                 collection['answer'] = answer
                 collection['upvote'] = ans_vote.up_vote
                 collection['downvote'] = ans_vote.down_vote
+                collection['creation_time'] = answer.creation_time
             else:
                 collection['answer'] = answer
                 collection['upvote'] = False
                 collection['downvote'] = False
+                collection['creation_time'] = answer.creation_time
             collections.append(collection)
         form = AnswerForm()
+        collections.sort(key=lambda item: item['creation_time'], reverse=True)
     context = {
             'ques_up_down': ques_up_down,
             'question':ques,
