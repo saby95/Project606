@@ -35,6 +35,7 @@ def user_details(user_id):
     dict_profile = {}
     user = User.objects.get(id=user_id)
     tasks = TaskUserJunction.objects.filter(worker_id_id=user_id)
+    dict_profile['id'] = user.id
     dict_profile['fname'] = user.first_name
     dict_profile['lname'] = user.last_name
     dict_profile['username'] = user.username
@@ -105,4 +106,14 @@ def change_roles(request):
     form = ChangeRolesForm(users=user_dict)
     return render(request, 'changeRoles.html', {'form': form, 'user_dict':user_dict_html})
 
-
+@login_required
+def reset_salary(request,worker_id):
+    user = User.objects.get(username=request.user.username)
+    profile = user.profile.role
+    if profile != 'admin':
+        messages.warning(request, 'Permission Denied!! You do not have permission to access this page')
+        return HttpResponseRedirect('/')
+    worker = User.objects.get(pk=worker_id)
+    worker.profile.total_salary = 0.00
+    worker.save()
+    return redirect('/')

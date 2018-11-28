@@ -32,6 +32,7 @@ urlpatterns = [
     url(r'^logout/$', auth_views.logout, {'next_page': '/'}, name='logout'),
     url(r'^signup/$', register.signup, name='signup'),
     url(r'^change_roles/$', user.change_roles, name='change_roles'),
+    url(r'^(?P<worker_id>[0-9]+)/reset_salary', user.reset_salary, name='reset_salary'),
     # url(r'^account_activation_sent/$', register.account_activation_sent, name='account_activation_sent'),
     # url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
     #     register.activate, name='activate'),
