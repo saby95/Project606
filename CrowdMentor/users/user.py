@@ -95,13 +95,16 @@ def change_roles(request):
     for usr in users:
         prf = Profile.objects.get(user_id=usr.id)
         if prf.mentor_id is not None:
+            mentor = User.objects.get(pk=prf.mentor_id)
             user_dict[usr.id] = [usr.username, usr.email, prf.role, prf.salary, prf.bonus, prf.fine,
                                  prf.audit_prob_user, prf.mentor_id]
+            user_dict_html[usr.id] = [usr.username, prf.role, i, i + 1, i + 2, i + 3, i + 4, i+5, mentor]
+            i = i + 6
         else:
             user_dict[usr.id] = [usr.username, usr.email, prf.role, prf.salary, prf.bonus, prf.fine,
                                  prf.audit_prob_user,0]
-        user_dict_html[usr.id] = [usr.username, prf.role, i, i+1, i+2, i+3, i+4, i+5]
-        i=i+6
+            user_dict_html[usr.id] = [usr.username, prf.role, i, i+1, i+2, i+3, i+4, i+5, 'None']
+            i = i + 6
 
     form = ChangeRolesForm(users=user_dict)
     return render(request, 'changeRoles.html', {'form': form, 'user_dict':user_dict_html})
