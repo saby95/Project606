@@ -17,7 +17,7 @@ def view(request):
             dict_functs['/broadcast/'] = 'Broadcast(' + str(broadcast_messages_count) + ')'
 
         if profile == UserRoles.ADMIN.value:
-            dict_functs['/change_roles'] = 'Change Roles'
+            dict_functs['/change_roles'] = 'Update Worker'
             dict_functs['/tasks/all_task_status'] = 'Mentor Status'
             dict_functs['/help/'] = 'Help'
             dict_functs['/broadcast/'] = 'Broadcast(' + str(broadcast_messages_count) + ')'

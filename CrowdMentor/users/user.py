@@ -29,7 +29,7 @@ def view(request):
                 profile_val = user_details(worker.user_id)
                 dict_profile[profile_val['username']] = profile_val
 
-    return render(request, 'home.html', {"profile": profile, 'dict_profile': dict_profile})
+    return render(request, 'home.html', {'dict_profile': dict_profile})
 
 def user_details(user_id):
     dict_profile = {}
@@ -38,11 +38,13 @@ def user_details(user_id):
     dict_profile['fname'] = user.first_name
     dict_profile['lname'] = user.last_name
     dict_profile['username'] = user.username
-    dict_profile['role'] = user.email
+    dict_profile['email'] = user.email
+    dict_profile['role'] = user.profile.role
     dict_profile['bdate'] = user.profile.birth_date
     dict_profile['salary'] = user.profile.salary
     dict_profile['bonus'] = user.profile.bonus
     dict_profile['fine'] = user.profile.fine
+    dict_profile['total_salary'] = user.profile.total_salary
 
     total_task = 0
     task_in_progress = 0

@@ -1,62 +1,50 @@
 {% extends 'base.html' %}
 
+
+
 {% block content %}
-<script type="text/javascript">
-function showDiv(x){
-    if (x.style.display === 'none') {
-        x.style.display = 'block';
-    } else {
-        x.style.display = 'none';
-    }
-}
-</script>
-<div class="page-header" style="float:left">
-  <h2>Welcome {{ user.get_full_name }}! <br> <small>Role: {{ profile }}</small></h2>
-    <h3>Total Salary: ${{user.profile.total_salary}}</h3><br>
-</div>
 
-<div class="jumbotron" style="float:right">
+<!--<div class="page-header" style="float:left">-->
+  <!--<h2>Welcome {{ user.get_full_name }}! <br> <small>Role: {{ profile }}</small></h2>-->
+    <!--<h3>Total Salary: ${{user.profile.total_salary}}</h3><br>-->
+<!--</div>-->
+
+<div class="accordion" id="accordionExample">
     {% for key, value in dict_profile.items %}
-    <h4 class="display-6">{{ key }}
-        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" onclick="showDiv({{ value.username }})">
-        </button>
-    </h4>
-    <div id="{{ value.username }}" style="display:none">
-    <h6>First name</h6>
-    <p>{{ value.fname }}</p>
-    <h6>Last name</h6>
-    <p>{{ value.lname }}</p>
-    <h6>Username</h6>
-    <p>{{ value.username }}</p>
-    <h6>Rols</h6>
-    <p>{{ value.role }}</p>
-    <h6>Birthdate</h6>
-    <p>{{ value.bdate }}</p>
-
-    <hr class="my-4">
-
-    <h6>Salary</h6>
-    <p>{{ value.salary }}</p>
-    <h6>Bonus</h6>
-    <p>{{ value.bonus }}</p>
-    <h6>Fine</h6>
-    <p>{{ value.fine }}</p>
-
-    <hr class="my-4">
-
-    <h6>Claimed tasks</h6>
-    <p>{{ value.claimed }}</p>
-    <h6>Finished tasks</h6>
-    <p>{{ value.finished }}</p>
-    <h6>Total hours worked</h6>
-    <p>{{ value.worked }}</p>
-    <h6>Average hoours worked</h6>
-    <p>{{ value.avgworked }}</p>
-
-    <hr class="my-4">
-    </div>
+      <div class="card">
+        <div class="card-header" id="heading{{forloop.counter}}">
+          <h5 class="mb-0">
+            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse{{forloop.counter}}" aria-expanded="false" aria-controls="collapse{{forloop.counter}}">
+              {{ key }}
+            </button>
+          </h5>
+        </div>
+        <div id="collapse{{forloop.counter}}" class="collapse" aria-labelledby="heading{{forloop.counter}}" data-parent="#accordionExample">
+          <div class="card-body">
+            <h5>Profile</h5>
+            Username: {{ value.username }}<br>
+            First name : {{ value.fname }}<br>
+            Last name : {{ value.lname }}<br>
+            Role : {{value.role}}<br>
+            Email : {{ value.email }}<br>
+            Birthday : {{ value.bdate }}
+            <hr class="my-4">
+            <h5>Contract</h5>
+            Salary : {{ value.salary }}<br>
+            Bonus : {{ value.bonus }}<br>
+            Fine : {{ value.fine }}<br>
+            Total salary : {{value.total_salary}}
+            <hr class="my-4">
+            <h5>Statistics</h5>
+            Number of tasks claimed :  {{ value.claimed }}<br>
+            Number of tasks finished : {{ value.finished }}<br>
+            Total hours spent : {{ value.worked|floatformat:"0" }}<br>
+            Average hour spent/task : {{ value.avgworked|floatformat:"0" }}
+          </div>
+        </div>
+      </div>
     {% endfor %}
-
 </div>
+
 
 {% endblock %}
