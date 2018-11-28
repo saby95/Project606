@@ -84,9 +84,9 @@ def change_roles(request):
             user.profile.bonus = request.POST.get('bonus_' + str(id))
             user.profile.fine = request.POST.get('fine_' + str(id))
             user.profile.audit_prob_user = request.POST.get('audit_prob_' + str(id))
-
-            if request.POST.get('mantor_id_' + str(id)) > 0:
-                user.profile.mentor_id = request.POST.get('mantor_id_' + str(id))
+            user.profile.mentor_id = request.POST.get('mentor_id_' + str(id))
+            # if request.POST.get('mantor_id_' + str(id)) > 0:
+            #     user.profile.mentor_id = request.POST.get('mantor_id_' + str(id))
             user.save()
         return redirect('/')
     user_dict=dict()

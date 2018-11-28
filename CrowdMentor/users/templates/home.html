@@ -9,6 +9,14 @@
     <!--<h3>Total Salary: ${{user.profile.total_salary}}</h3><br>-->
 <!--</div>-->
 
+{% if user.profile.role == 'admin'%}
+<h5>List of all workers : </h5>
+{% endif %}
+
+{% if user.profile.role == 'mentor'%}
+<h5>List of all mentees : </h5>
+{% endif %}
+
 <div class="accordion" id="accordionExample">
     {% for key, value in dict_profile.items %}
       <div class="card">

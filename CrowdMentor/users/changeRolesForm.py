@@ -1,6 +1,6 @@
 from django import forms
 import UserRoles
-
+from django.contrib.auth.models import User
 
 class ChangeRolesForm(forms.Form):
     def __init__(self, *args, **kwargs):
@@ -16,7 +16,8 @@ class ChangeRolesForm(forms.Form):
             self.fields['bonus_' + str(key)] = forms.FloatField(label='Bonus', initial=value[4], required=False)
             self.fields['fine_' + str(key)] = forms.FloatField(label='Fine', initial=value[5], required=False)
             self.fields['audit_prob_' + str(key)] = forms.FloatField(label='Audit Probability', initial=value[6], required=False)
-            self.fields['mantor_id_' + str(key)] = forms.IntegerField(label='Mentor id', initial=value[7], required=False)
+            #self.fields['mantor_id_' + str(key)] = forms.IntegerField(label='Mentor id', initial=value[7], required=False)
+            self.fields['mentor_id_' + str(key)] = forms.ModelChoiceField(queryset=User.objects.all(), required=False)
             # self.fields['role_' + str(key)].initial = value[2]
 
 
