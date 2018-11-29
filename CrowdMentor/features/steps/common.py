@@ -53,7 +53,7 @@ def step_impl(context, role):
 def step_impl(context):
     br = context.browser
     br.visit(context.base_url)
-    br.find_link_by_text("logout").first.click()
+    br.find_link_by_text("Logout").first.click()
 
 
 

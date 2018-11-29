@@ -84,9 +84,9 @@ def change_roles(request):
             user.profile.bonus = request.POST.get('bonus_' + str(id))
             user.profile.fine = request.POST.get('fine_' + str(id))
             user.profile.audit_prob_user = request.POST.get('audit_prob_' + str(id))
-            user.profile.mentor_id = request.POST.get('mentor_id_' + str(id))
-            # if request.POST.get('mantor_id_' + str(id)) > 0:
-            #     user.profile.mentor_id = request.POST.get('mantor_id_' + str(id))
+            if request.POST.get('mantor_id_' + str(id)) is not 'None':
+                user.profile.mentor_id = request.POST.get('mentor_id_' + str(id))
+
             user.save()
         return redirect('/')
     user_dict=dict()
@@ -94,8 +94,8 @@ def change_roles(request):
     i=0
     for usr in users:
         prf = Profile.objects.get(user_id=usr.id)
-        if prf.mentor_id is not None:
-            mentor = User.objects.get(pk=prf.mentor_id)
+        if prf.mentor_id is not None and prf.mentor_id > 0:
+            mentor = User.objects.get(id=prf.mentor_id)
             user_dict[usr.id] = [usr.username, usr.email, prf.role, prf.salary, prf.bonus, prf.fine,
                                  prf.audit_prob_user, prf.mentor_id]
             user_dict_html[usr.id] = [usr.username, prf.role, i, i + 1, i + 2, i + 3, i + 4, i+5, mentor]

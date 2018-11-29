@@ -15,7 +15,6 @@
                         <th scope="col">Bonus</th>
                         <th scope="col">Fine</th>
                         <th scope="col">Audit Probability</th>
-                        <th scope="col">Old Mentor</th>
                         <th scope="col">New Mentor</th>
                     </tr>
                 </thead>
@@ -29,7 +28,6 @@
                             <th>{{ form.visible_fields|get_at_index:value.4 }}</th>
                             <th>{{ form.visible_fields|get_at_index:value.5 }}</th>
                             <th>{{ form.visible_fields|get_at_index:value.6 }}</th>
-                            <th>{{ value.8 }}</th>
                             <th>{{ form.visible_fields|get_at_index:value.7 }}</th>
                         </tr>
                     {% endfor %}
