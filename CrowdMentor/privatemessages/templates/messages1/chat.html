@@ -1,4 +1,8 @@
 {% extends "base.html" %}
+<!--
+{% load staticfiles %}"{% static 'style.css' %}"
+-->
+
 
 {% block title %}{{ partner.username }}{% endblock %}
 
@@ -10,29 +14,53 @@ $(document).ready(function() {
         "sent": {{ messages_sent }},
         "received": {{ messages_received }}
     });
-});
+
+
 </script>
 {% endblock %}
 
 {% block content %}
 <div class="chat">
-    <div class="partner">
-        <p class="name"><b>Conversation with {{ partner.username }}</b></p>
-        <p class="messages"><span class="total">Total messages: {{ messages_total }}</span> {{ messages_total }} (<span class="received">{{ messages_received }}</span> received, <span class="sent">{{ messages_sent }}</span> sent to {{ partner.username }})</p>
-    </div>
-    <div class="conversation">
-        {% for message in thread_messages reversed %}
-        <div class="message"> 
-            {% if message.sender == user %}<p class="author we"><b> {{ user.username }}:</b></p>{% else %}<p class="author partner"><b>{{ partner.username }}:</b></p>{% endif %}
-            <p class="message">{{ message.text|linebreaksbr }}</p>
+
+    <div class="card buddy bg-dark">
+        <!--
+        <div class="card-heading" style="color:white;background-color:blue;"><p class="author we"><b> {{ user.username }}</b></p></div>
+        -->
+        <div class="card-body">
+            <a style="color:white;">Conversation with <b>{{ partner.username }}</b></a>
         </div>
+    </div>
+    <!--
+    <div class="partner">
+    <p class="messages"><span class="total">Total messages: {{ messages_total }}</span> {{ messages_total }} (<span class="received">{{ messages_received }}</span> received, <span class="sent">{{ messages_sent }}</span> sent to {{ partner.username }})</p>
+    </div>
+    -->
+
+    <div class="conversation">
+
+        {% for message in thread_messages reversed %}
+            <div class="message card w-75 {% if message.sender == user %} float-right {% else %} float-left {% endif %}">
+                <!--
+                <div class="card-heading h1" style="color:white;background-color:blue;">{% if message.sender == user %}<p class="author we  {% if message.sender == user %} float-left {% else %} float-right {% endif %}"><b> {{ user.username }}</b></p>{% else %}<p class="author partner  {% if message.sender == user %} float-left {% else %} float-right {% endif %}"><b>{{ partner.username }}</b></p>{% endif %}</div>
+                -->
+                <div class="card-body"><p class="message">{{ message.text|linebreaksbr }}</p></div>
+            </div>
         {% endfor %}
     </div>
-    <form action="{% url 'send_message_view' %}" method="post" class="new_message">
-        {% csrf_token %}
-        <input type="hidden" name="recipient_name" value={{ partner.username }}>
-        <p><textarea name="message" placeholder="message"></textarea></p>
-        <p><input type="submit" value="submit"></p>
-    </form>
+
+    <div class="message card w-75 float-right">
+        <!--
+        <div class="card-heading" style="color:white;background-color:blue;"><p class="author we"><b> {{ user.username }}</b></p></div>
+        -->
+        <div class="card-body">
+            <form action="{% url 'send_message_view' %}" method="post" class="new_message float-left w-100">
+                {% csrf_token %}
+                <input type="hidden" name="recipient_name" value={{ partner.username }}>
+                <textarea type="text" class="md-textarea form-control mw-75" style="min-width: 100%" name="message" placeholder="reply"></textarea>
+                <p><input type="submit" value="submit"></p>
+            </form>
+        </div>
+    </div>
+
 </div>
 {% endblock content %}
