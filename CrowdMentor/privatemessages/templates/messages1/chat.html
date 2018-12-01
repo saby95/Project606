@@ -50,9 +50,6 @@ $(document).ready(function() {
         </div>
 
         <div class="message card w-75 float-right">
-            <!--
-            <div class="card-heading" style="color:white;background-color:blue;"><p class="author we"><b> {{ user.username }}</b></p></div>
-            -->
             <div class="card-body">
                 <form action="{% url 'send_message_view' %}" method="post" class="new_message float-left w-100">
                     {% csrf_token %}

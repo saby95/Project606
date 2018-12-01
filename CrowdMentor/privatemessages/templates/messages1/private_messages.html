@@ -27,7 +27,7 @@
             {% for thread in threads %}
                 <a href="{% url 'chat_view' thread_id=thread.id %}" class="bg-light list-group-item list-group-item-action flex-column align-items-start active">
                     <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">{{ thread.partner.username }}</h5>
+                        <h5 class="mb-1" style="color:black;">{{ thread.partner.username }}</h5>
                         <span class="badge badge-primary badge-pill">{{ thread.total_messages|default_if_none:"0" }}</span>
                     </div>
                 </a>
