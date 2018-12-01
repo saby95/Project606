@@ -21,13 +21,13 @@
     </div>
     -->
 
-    <div class="container">
+    <div class="container border w-50 col-md-12">
         <h1>Chat Threads</h1>
-        <div class="list-group w-75">
+        <div class="list-group">
             {% for thread in threads %}
                 <a href="{% url 'chat_view' thread_id=thread.id %}" class="bg-light list-group-item list-group-item-action flex-column align-items-start active">
                     <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">{{ thread.partner.username }}</h5>
+                        <h5 class="mb-1" style="color:black;">{{ thread.partner.username }}</h5>
                         <span class="badge badge-primary badge-pill">{{ thread.total_messages|default_if_none:"0" }}</span>
                     </div>
                 </a>
@@ -42,7 +42,7 @@
     </div>
 
 
-    <div class="container">
+    <div class="container border w-50 col-md-12">
         <h1>Create a message</h1>
         <form action="{% url 'send_message_view' %}" method="post" class="new_message">
             {% csrf_token %}
@@ -53,8 +53,8 @@
                 {% endfor %}
             </select>
             </p>
-            <p><textarea name="message" placeholder="message"></textarea></p>
-            <p><input id="submit" type="submit" value="submit"></p>
+            <p><textarea type="text" class="md-textarea form-control mw-75" style="min-width: 100%" name="message" placeholder="Type a message"></textarea></p>
+            <p><input id="submit" type="submit" value="send"></p>
         </form>
     </div>
 
