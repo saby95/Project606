@@ -2,6 +2,7 @@
 
 {% block content %}
 <div class="private_messages">
+    <!--
     <div class="partners">
     {% for thread in threads %}
         <p><a href="{% url 'chat_view' thread_id=thread.id %}">{{ thread.partner.username }} ({{ thread.total_messages|default_if_none:"0" }} )</a></p>
@@ -9,18 +10,53 @@
         <p>So far there are no messages</p>
     {% endfor %}
     </div>
-    <h1>Create messages</h1>
-    <form action="{% url 'send_message_view' %}" method="post" class="new_message">
-        {% csrf_token %}
-        <p>Choose Recipient: &nbsp;&nbsp;&nbsp;&nbsp;
-        <select id="recipient_name" name="recipient_name">
-            {% for y in chat_participants %}
-                <option value="{{ y.0 }}">{{ y.0 }}&nbsp;Online:&nbsp;{{ y.1 }}</option>
+    -->
+    <!--
+    <div class="partners">
+            {% for thread in threads %}
+                <li><p><a href="{% url 'chat_view' thread_id=thread.id %}">{{ thread.partner.username }} ({{ thread.total_messages|default_if_none:"0" }} )</a></p></li>
+            {% empty %}
+                <li><p>So far there are no messages</p></li>
             {% endfor %}
-        </select>
-        </p>
-        <p><textarea name="message" placeholder="message"></textarea></p>
-        <p><input id="submit" type="submit" value="submit"></p>
-    </form>
+    </div>
+    -->
+
+    <div class="container">
+        <h1>Chat Threads</h1>
+        <div class="list-group w-75">
+            {% for thread in threads %}
+                <a href="{% url 'chat_view' thread_id=thread.id %}" class="bg-light list-group-item list-group-item-action flex-column align-items-start active">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{ thread.partner.username }}</h5>
+                        <span class="badge badge-primary badge-pill">{{ thread.total_messages|default_if_none:"0" }}</span>
+                    </div>
+                </a>
+            {% empty %}
+                <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+                    <div class="d-flex w-100 justify-content-between">
+                        <small>Your messages with other members will appear here</small>
+                    </div>
+                </a>
+        {% endfor %}
+        </div>
+    </div>
+
+
+    <div class="container">
+        <h1>Create a message</h1>
+        <form action="{% url 'send_message_view' %}" method="post" class="new_message">
+            {% csrf_token %}
+            <p>Choose Recipient: &nbsp;&nbsp;&nbsp;&nbsp;
+            <select id="recipient_name" name="recipient_name">
+                {% for y in chat_participants %}
+                    <option value="{{ y.0 }}">{{ y.0 }}&nbsp;Online:&nbsp;{{ y.1 }}</option>
+                {% endfor %}
+            </select>
+            </p>
+            <p><textarea name="message" placeholder="message"></textarea></p>
+            <p><input id="submit" type="submit" value="submit"></p>
+        </form>
+    </div>
+
 </div>
 {% endblock content %}
