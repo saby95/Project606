@@ -42,8 +42,7 @@ def step_impl(context):
 @then('I can {voteType} the question')
 def step_impl(context, voteType):
     br = context.browser
-    br.visit(context.base_url + '/help/'+ str(context.ques.id)+ '/'+ voteType)
-    print(br.html)
+    br.visit(context.base_url + '/help/')
     assert br.is_text_present('1')
 
 @then('I can {voteType} the answer')
@@ -131,3 +130,10 @@ def step_impl(context, voteType1, voteType2):
              str(context.ans.id) + '/' + voteType1)
     br.visit(context.base_url + '/help/' + str(context.ques.id) + '/' +
              str(context.ans.id) + '/' + voteType2)
+
+
+@when('I {voteType} once')
+def step_impl(context, voteType):
+    br = context.browser
+    br.visit(context.base_url + '/help/' + str(context.ques.id) + '/' + voteType)
+    print(br.html)

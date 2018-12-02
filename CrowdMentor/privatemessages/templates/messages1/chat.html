@@ -10,29 +10,41 @@ $(document).ready(function() {
         "sent": {{ messages_sent }},
         "received": {{ messages_received }}
     });
-});
+
+
 </script>
 {% endblock %}
 
 {% block content %}
-<div class="chat">
-    <div class="partner">
-        <p class="name"><b>Conversation with {{ partner.username }}</b></p>
-        <p class="messages"><span class="total">Total messages: {{ messages_total }}</span> {{ messages_total }} (<span class="received">{{ messages_received }}</span> received, <span class="sent">{{ messages_sent }}</span> sent to {{ partner.username }})</p>
-    </div>
-    <div class="conversation">
-        {% for message in thread_messages reversed %}
-        <div class="message"> 
-            {% if message.sender == user %}<p class="author we"><b> {{ user.username }}:</b></p>{% else %}<p class="author partner"><b>{{ partner.username }}:</b></p>{% endif %}
-            <p class="message">{{ message.text|linebreaksbr }}</p>
+<div class="container">
+    <div class="chat">
+
+        <div class="card bg-primary my-3">
+            <div class="card-body">
+                <a style="color:black;">Conversation with <b><h1>{{ partner.username }}</h1></b></a>
+            </div>
         </div>
-        {% endfor %}
+
+        <div class="conversation">
+
+            {% for message in thread_messages reversed %}
+                <div class="message card w-75 my-1 {% if message.sender == user %} float-right {% else %} float-left {% endif %}">
+                    <div class="card-body {% if message.sender == user %} bg-light {% else %} bg-dark {% endif %}"><p class="message {% if message.sender == user %} text-dark {% else %} text-light {% endif %}">{{ message.text|linebreaksbr }}</p></div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="message card w-75 float-right my-1">
+            <div class="card-body bg-light text-dark">
+                <form action="{% url 'send_message_view' %}" method="post" class="new_message float-left w-100">
+                    {% csrf_token %}
+                    <input type="hidden" name="recipient_name" value={{ partner.username }}>
+                    <p><textarea type="text" class="md-textarea form-control mw-75" style="min-width: 100%" name="message" placeholder="Type a message"></textarea></p>
+                    <p><input class="b-0" type="submit" value="send"></p>
+                </form>
+            </div>
+        </div>
+
     </div>
-    <form action="{% url 'send_message_view' %}" method="post" class="new_message">
-        {% csrf_token %}
-        <input type="hidden" name="recipient_name" value={{ partner.username }}>
-        <p><textarea name="message" placeholder="message"></textarea></p>
-        <p><input type="submit" value="submit"></p>
-    </form>
 </div>
 {% endblock content %}

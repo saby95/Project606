@@ -125,6 +125,10 @@
 <p id="n56" class="pln"><a href="#n56">56</a></p>
 <p id="n57" class="pln"><a href="#n57">57</a></p>
 <p id="n58" class="pln"><a href="#n58">58</a></p>
+<p id="n59" class="pln"><a href="#n59">59</a></p>
+<p id="n60" class="pln"><a href="#n60">60</a></p>
+<p id="n61" class="pln"><a href="#n61">61</a></p>
+<p id="n62" class="pln"><a href="#n62">62</a></p>
 
             </td>
             <td class="text">
@@ -162,30 +166,34 @@
 <p id="t32" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^logout/$'</span><span class="op">,</span> <span class="nam">auth_views</span><span class="op">.</span><span class="nam">logout</span><span class="op">,</span> <span class="op">{</span><span class="str">'next_page'</span><span class="op">:</span> <span class="str">'/'</span><span class="op">}</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="str">'logout'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
 <p id="t33" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^signup/$'</span><span class="op">,</span> <span class="nam">register</span><span class="op">.</span><span class="nam">signup</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="str">'signup'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
 <p id="t34" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^change_roles/$'</span><span class="op">,</span> <span class="nam">user</span><span class="op">.</span><span class="nam">change_roles</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="str">'change_roles'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
-<p id="t35" class="pln">    <span class="com"># url(r'^account_activation_sent/$', register.account_activation_sent, name='account_activation_sent'),</span><span class="strut">&nbsp;</span></p>
-<p id="t36" class="pln">    <span class="com"># url(r'^activate/(?P&lt;uidb64>[0-9A-Za-z_\-]+)/(?P&lt;token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',</span><span class="strut">&nbsp;</span></p>
-<p id="t37" class="pln">    <span class="com">#     register.activate, name='activate'),</span><span class="strut">&nbsp;</span></p>
-<p id="t38" class="pln"><span class="strut">&nbsp;</span></p>
-<p id="t39" class="pln">    <span class="com">#For the tasks</span><span class="strut">&nbsp;</span></p>
-<p id="t40" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^tasks/'</span><span class="op">,</span> <span class="nam">include</span><span class="op">(</span><span class="str">'tasks.urls'</span><span class="op">)</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
-<p id="t41" class="pln"><span class="strut">&nbsp;</span></p>
-<p id="t42" class="pln">    <span class="com"># Chat</span><span class="strut">&nbsp;</span></p>
-<p id="t43" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^messages/'</span><span class="op">,</span> <span class="nam">include</span><span class="op">(</span><span class="str">'privatemessages.urls'</span><span class="op">)</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
-<p id="t44" class="pln"><span class="strut">&nbsp;</span></p>
-<p id="t45" class="pln">    <span class="com">#For the peerhelp</span><span class="strut">&nbsp;</span></p>
-<p id="t46" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^help/'</span><span class="op">,</span> <span class="nam">include</span><span class="op">(</span><span class="str">'peerhelp.urls'</span><span class="op">)</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
-<p id="t47" class="pln"><span class="strut">&nbsp;</span></p>
-<p id="t48" class="pln">    <span class="com"># Password Reset</span><span class="strut">&nbsp;</span></p>
-<p id="t49" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^password_reset/$'</span><span class="op">,</span> <span class="nam">auth_views</span><span class="op">.</span><span class="nam">PasswordResetView</span><span class="op">.</span><span class="nam">as_view</span><span class="op">(</span><span class="nam">template_name</span><span class="op">=</span><span class="str">"registration/password_reset_form.html"</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
-<p id="t50" class="pln">        <span class="nam">name</span><span class="op">=</span><span class="str">'password_reset'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
-<p id="t51" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^password_reset/done/$'</span><span class="op">,</span> <span class="nam">auth_views</span><span class="op">.</span><span class="nam">PasswordResetDoneView</span><span class="op">.</span><span class="nam">as_view</span><span class="op">(</span><span class="nam">template_name</span><span class="op">=</span><span class="str">"registration/password_reset_done.html"</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
-<p id="t52" class="pln">        <span class="nam">name</span><span class="op">=</span><span class="str">'password_reset_done'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
-<p id="t53" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^reset/(?P&lt;uidb64>[0-9A-Za-z_\-]+)/(?P&lt;token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$'</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
-<p id="t54" class="pln">        <span class="nam">auth_views</span><span class="op">.</span><span class="nam">PasswordResetConfirmView</span><span class="op">.</span><span class="nam">as_view</span><span class="op">(</span><span class="nam">template_name</span><span class="op">=</span><span class="str">"registration/password_reset_confirm.html"</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
-<p id="t55" class="pln">        <span class="nam">name</span><span class="op">=</span><span class="str">'password_reset_confirm'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
-<p id="t56" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^reset/done/$'</span><span class="op">,</span> <span class="nam">auth_views</span><span class="op">.</span><span class="nam">PasswordResetCompleteView</span><span class="op">.</span><span class="nam">as_view</span><span class="op">(</span><span class="nam">template_name</span><span class="op">=</span><span class="str">"registration/password_reset_complete.html"</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
-<p id="t57" class="pln">        <span class="nam">name</span><span class="op">=</span><span class="str">'password_reset_complete'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
-<p id="t58" class="pln"><span class="op">]</span><span class="strut">&nbsp;</span></p>
+<p id="t35" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^(?P&lt;worker_id>[0-9]+)/reset_salary'</span><span class="op">,</span> <span class="nam">user</span><span class="op">.</span><span class="nam">reset_salary</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="str">'reset_salary'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t36" class="pln">    <span class="com"># url(r'^account_activation_sent/$', register.account_activation_sent, name='account_activation_sent'),</span><span class="strut">&nbsp;</span></p>
+<p id="t37" class="pln">    <span class="com"># url(r'^activate/(?P&lt;uidb64>[0-9A-Za-z_\-]+)/(?P&lt;token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',</span><span class="strut">&nbsp;</span></p>
+<p id="t38" class="pln">    <span class="com">#     register.activate, name='activate'),</span><span class="strut">&nbsp;</span></p>
+<p id="t39" class="pln"><span class="strut">&nbsp;</span></p>
+<p id="t40" class="pln">    <span class="com">#For the tasks</span><span class="strut">&nbsp;</span></p>
+<p id="t41" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^tasks/'</span><span class="op">,</span> <span class="nam">include</span><span class="op">(</span><span class="str">'tasks.urls'</span><span class="op">)</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t42" class="pln"><span class="strut">&nbsp;</span></p>
+<p id="t43" class="pln">    <span class="com"># Chat</span><span class="strut">&nbsp;</span></p>
+<p id="t44" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^messages/'</span><span class="op">,</span> <span class="nam">include</span><span class="op">(</span><span class="str">'privatemessages.urls'</span><span class="op">)</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t45" class="pln"><span class="strut">&nbsp;</span></p>
+<p id="t46" class="pln">    <span class="com">#For the peerhelp</span><span class="strut">&nbsp;</span></p>
+<p id="t47" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^help/'</span><span class="op">,</span> <span class="nam">include</span><span class="op">(</span><span class="str">'peerhelp.urls'</span><span class="op">)</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t48" class="pln"><span class="strut">&nbsp;</span></p>
+<p id="t49" class="pln">    <span class="com"># Broadcast</span><span class="strut">&nbsp;</span></p>
+<p id="t50" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^broadcast/'</span><span class="op">,</span> <span class="nam">include</span><span class="op">(</span><span class="str">'broadcast.urls'</span><span class="op">)</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t51" class="pln"><span class="strut">&nbsp;</span></p>
+<p id="t52" class="pln">    <span class="com"># Password Reset</span><span class="strut">&nbsp;</span></p>
+<p id="t53" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^password_reset/$'</span><span class="op">,</span> <span class="nam">auth_views</span><span class="op">.</span><span class="nam">PasswordResetView</span><span class="op">.</span><span class="nam">as_view</span><span class="op">(</span><span class="nam">template_name</span><span class="op">=</span><span class="str">"registration/password_reset_form.html"</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t54" class="pln">        <span class="nam">name</span><span class="op">=</span><span class="str">'password_reset'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t55" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^password_reset/done/$'</span><span class="op">,</span> <span class="nam">auth_views</span><span class="op">.</span><span class="nam">PasswordResetDoneView</span><span class="op">.</span><span class="nam">as_view</span><span class="op">(</span><span class="nam">template_name</span><span class="op">=</span><span class="str">"registration/password_reset_done.html"</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t56" class="pln">        <span class="nam">name</span><span class="op">=</span><span class="str">'password_reset_done'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t57" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^reset/(?P&lt;uidb64>[0-9A-Za-z_\-]+)/(?P&lt;token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$'</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t58" class="pln">        <span class="nam">auth_views</span><span class="op">.</span><span class="nam">PasswordResetConfirmView</span><span class="op">.</span><span class="nam">as_view</span><span class="op">(</span><span class="nam">template_name</span><span class="op">=</span><span class="str">"registration/password_reset_confirm.html"</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t59" class="pln">        <span class="nam">name</span><span class="op">=</span><span class="str">'password_reset_confirm'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t60" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">r'^reset/done/$'</span><span class="op">,</span> <span class="nam">auth_views</span><span class="op">.</span><span class="nam">PasswordResetCompleteView</span><span class="op">.</span><span class="nam">as_view</span><span class="op">(</span><span class="nam">template_name</span><span class="op">=</span><span class="str">"registration/password_reset_complete.html"</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t61" class="pln">        <span class="nam">name</span><span class="op">=</span><span class="str">'password_reset_complete'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t62" class="pln"><span class="op">]</span><span class="strut">&nbsp;</span></p>
 
             </td>
         </tr>
@@ -196,7 +204,7 @@
     <div class="content">
         <p>
             <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v4.5.1</a>,
-            created at 2018-11-24 15:02
+            created at 2018-11-29 12:09
         </p>
     </div>
 </div>

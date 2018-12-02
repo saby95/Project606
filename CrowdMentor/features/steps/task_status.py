@@ -45,4 +45,4 @@ def step_impl(context):
 def step_impl(context):
     br = context.browser
     br.visit(context.base_url + '/tasks/all_task_status/')
-    assert br.is_text_present('Username')
+    assert br.is_text_present('Mentor')
