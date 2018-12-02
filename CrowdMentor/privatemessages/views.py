@@ -13,6 +13,7 @@ from privatemessages.utils import send_message
 from broadcast.models import BroadcastMessages
 from django.contrib.auth.decorators import login_required
 from time import sleep
+from django.contrib import messages
 
 @login_required
 def send_message_view(request):
@@ -22,10 +23,12 @@ def send_message_view(request):
     message_text = request.POST.get("message")
 
     if not message_text:
-        return HttpResponse("No message found.")
+        messages.warning(request, 'Message Blank')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
     if len(message_text) > 10000:
-        return HttpResponse("The message is too long.")
+        messages.warning(request, 'Message Too Long')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
     recipient_name = request.POST.get("recipient_name")
     recipient = User.objects.get(username=recipient_name)
@@ -49,7 +52,7 @@ def send_message_view(request):
                     request.user.username
                 )
 
-    return HttpResponseRedirect('/messages')
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 @login_required
 def messages_view(request):
