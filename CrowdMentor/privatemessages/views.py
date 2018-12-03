@@ -16,7 +16,7 @@ from time import sleep
 from django.contrib import messages
 
 @login_required
-def send_message_view(request):
+def send_message_view(request, thread_id=None):
     if not request.method == "POST":
         return HttpResponse("Please use POST.")
 
@@ -38,6 +38,9 @@ def send_message_view(request):
     ).filter(
         participants=request.user
     )
+
+    if thread_id:
+        thread_queryset = thread_queryset.filter(id=thread_id)
 
     if thread_queryset.exists():
         thread = thread_queryset[0]
@@ -80,6 +83,7 @@ def messages_view(request):
         return render(request, 'messages1/private_messages.html',
                                   {
                                       "chat_participants": chat_participants,
+                                      "user_role": role
                                   })
 
     #r = redis.StrictRedis()
@@ -108,6 +112,7 @@ def messages_view(request):
                               {
                                   "threads": updated_threads,
                                   "chat_participants": chat_participants,
+                                  "user_role": role
                               })
 
 @login_required
@@ -169,12 +174,14 @@ def live_chat(request):
     broadcast_id = request.POST.get("broadcast_id")
     thread_id = request.POST.get("thread_id")
     if not broadcast_id:
-        thread = Thread.objects.create()
-        thread.participants.add(request.user)
-        thread_id = thread.id
+        if not thread_id:
+            thread = Thread.objects.create()
+            thread.participants.add(request.user)
+            thread_id = thread.id
 
         broadcast = BroadcastMessages.objects.create(broadcast_type='live-chat', group_role=UserRoles.MENTOR.value,
-                                                     broadcast_message='User ' + request.user.username + ' wants to chat')
+                                                     broadcast_message='User ' + request.user.username + ' wants to chat',
+                                                     br_params=thread_id)
         broadcast_id = broadcast.id
     else:
         broadcast = get_object_or_404(BroadcastMessages, id=broadcast_id)

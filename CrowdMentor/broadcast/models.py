@@ -14,6 +14,7 @@ class BroadcastMessages(models.Model):
     group_role = models.CharField(max_length=10, blank=True, null=True)
     claim = models.BooleanField(default=False)
     claim_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, blank=True, null=True)
+    br_params = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return self.broadcast_message

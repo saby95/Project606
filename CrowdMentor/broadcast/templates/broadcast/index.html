@@ -6,7 +6,7 @@
 {% for message in broadcast_messages %}
 <div class="container">
     <div class="alert alert-primary" role="alert">
-        {{ message }} &emsp;&emsp;&emsp; <a href="/broadcast/{{message.id}}/claim" class="btn btn-primary" role="button">Claim</a>
+        {{ message }} &emsp;&emsp;&emsp; <a href="/broadcast/{{message.id}}/{{message.br_params}}/claim" class="btn btn-primary" role="button">Claim</a>
     </div>
 </div>
 {% endfor %}

@@ -15,7 +15,7 @@ def view(request):
     profile = Profile.objects.get(user_id=user_id).role
 
     dict_profile = {}
-    if profile == UserRoles.WORKER.value:
+    if profile == UserRoles.NORMAL_WORKER.value:
         dict_profile[request.user.username] = user_details(user_id)
     elif profile == UserRoles.MENTOR.value:
         workers = Profile.objects.filter(mentor_id=user_id)

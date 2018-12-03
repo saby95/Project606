@@ -21,42 +21,73 @@
     </div>
     -->
 
-    <div class="container border w-50 col-md-12 my-3">
-        <h1>Chat Threads</h1>
-        <div class="list-group my-3">
-            {% for thread in threads %}
-                <a href="{% url 'chat_view' thread_id=thread.id %}" class="bg-light list-group-item list-group-item-action flex-column align-items-start active">
-                    <div class="d-flex w-100 my-1 justify-content-between">
-                        <h5 class="mb-1" style="color:black;">{{ thread.partner.username }}</h5>
-                        <span class="badge badge-primary badge-pill">{{ thread.total_messages|default_if_none:"0" }}</span>
-                    </div>
-                </a>
-            {% empty %}
-                <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
-                    <div class="d-flex w-100 justify-content-between">
-                        <small>Your messages with other members will appear here</small>
-                    </div>
-                </a>
-        {% endfor %}
+    {% if user_role == "virtual_worker" %}
+        <div class="container border w-50 col-md-12 my-3">
+            <h1>Chat Threads</h1>
+            <div class="list-group my-3">
+                {% for thread in threads %}
+                    <form id="form-id" action="{% url 'live_chat' %}" method="post"
+                          class="bg-light list-group-item list-group-item-action flex-column align-items-start active">
+                        {% csrf_token %}
+                        <input type="hidden" name="thread_id" value="{{ thread.id }}">
+                        <div onclick="document.getElementById('form-id').submit();"
+                             class="d-flex w-100 my-1 justify-content-between">
+                            <h5 class="mb-1" style="color:black;"> Random Mentor </h5>
+                            <span class="badge badge-primary badge-pill">{{ thread.total_messages|default_if_none:"0" }}</span>
+                        </div>
+                    </form>
+                {% empty %}
+                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+                        <div class="d-flex w-100 justify-content-between">
+                            <small>Your previous chat threads will appear here</small>
+                        </div>
+                    </a>
+            {% endfor %}
+            </div>
         </div>
-    </div>
-
-
-    <div class="container border w-50 col-md-12">
-        <h1>New message</h1>
-        <form action="{% url 'send_message_view' %}" method="post" class="new_message">
-            {% csrf_token %}
-            <p>Choose Recipient: &nbsp;&nbsp;&nbsp;&nbsp;
-            <select id="recipient_name" name="recipient_name">
-                {% for y in chat_participants %}
-                    <option value="{{ y.0 }}">{{ y.0 }}&nbsp;Online:&nbsp;{{ y.1 }}</option>
-                {% endfor %}
-            </select>
-            </p>
-            <p><textarea type="text" class="md-textarea form-control mw-75" style="min-width: 100%" name="message" placeholder="Type a message"></textarea></p>
-            <p><input id="submit" type="submit" value="send"></p>
-        </form>
-    </div>
+        <div class="container border w-50 col-md-12">
+            <h2>Start a New Chat Thread</h2>
+            <form action="{% url 'live_chat' %}" method="post" class="new_message">
+                {% csrf_token %}
+                <p><input id="submit" type="submit" value="Live Chat"> </p>
+            </form>
+        </div>
+    {% else %}
+        <div class="container border w-50 col-md-12 my-3">
+            <h1>Chat Threads</h1>
+            <div class="list-group my-3">
+                {% for thread in threads %}
+                    <a href="{% url 'chat_view' thread_id=thread.id %}" class="bg-light list-group-item list-group-item-action flex-column align-items-start active">
+                        <div class="d-flex w-100 my-1 justify-content-between">
+                            <h5 class="mb-1" style="color:black;">{{ thread.partner.username }}</h5>
+                            <span class="badge badge-primary badge-pill">{{ thread.total_messages|default_if_none:"0" }}</span>
+                        </div>
+                    </a>
+                {% empty %}
+                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+                        <div class="d-flex w-100 justify-content-between">
+                            <small>Your messages with other members will appear here</small>
+                        </div>
+                    </a>
+            {% endfor %}
+            </div>
+        </div>
+        <div class="container border w-50 col-md-12">
+            <h1>New message</h1>
+            <form action="{% url 'send_message_view' %}" method="post" class="new_message">
+                {% csrf_token %}
+                <p>Choose Recipient: &nbsp;&nbsp;&nbsp;&nbsp;
+                <select id="recipient_name" name="recipient_name">
+                    {% for y in chat_participants %}
+                        <option value="{{ y.0 }}">{{ y.0 }}&nbsp;Online:&nbsp;{{ y.1 }}</option>
+                    {% endfor %}
+                </select>
+                </p>
+                <p><textarea type="text" class="md-textarea form-control mw-75" style="min-width: 100%" name="message" placeholder="Type a message"></textarea></p>
+                <p><input id="submit" type="submit" value="send"></p>
+            </form>
+        </div>
+    {% endif %}
 
 </div>
 {% endblock content %}

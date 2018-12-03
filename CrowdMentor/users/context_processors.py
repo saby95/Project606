@@ -22,7 +22,7 @@ def view(request):
             dict_functs['/help/'] = 'Help'
             dict_functs['/broadcast/'] = 'Broadcast(' + str(broadcast_messages_count) + ')'
 
-        if profile == UserRoles.WORKER.value:
+        if profile == UserRoles.NORMAL_WORKER.value or profile == UserRoles.VIRTUAL_WORKER.value:
             dict_functs['/tasks/claimed/'] = 'Claimed tasks'
             dict_functs['/tasks/'] = 'Open tasks'
             dict_functs['/messages/'] = 'Messages'

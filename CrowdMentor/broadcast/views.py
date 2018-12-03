@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import BroadcastMessages
+from privatemessages.models import Thread
 
 @login_required
 def index(request):
@@ -18,10 +19,17 @@ def index(request):
     return render(request, 'broadcast/index.html', context)
 
 @login_required
-def claim(request, broadcast_id):
+def claim(request, broadcast_id, thread_id):
     broadcast = get_object_or_404(BroadcastMessages, id=broadcast_id)
     broadcast.claim = True
     broadcast.claim_by = request.user
     broadcast.save()
 
-    return redirect('messages_view')
+    thread = get_object_or_404(
+        Thread,
+        id=thread_id
+    )
+    thread.participants.add(request.user)
+    thread.save()
+
+    return redirect('chat_view', thread_id=thread_id)
