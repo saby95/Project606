@@ -7,7 +7,8 @@ from broadcast.models import BroadcastMessages
 def view(request):
     dict_functs = {}
     if request.user.is_authenticated:
-        user_id = User.objects.get(username=request.user.username).id
+        user = User.objects.get(username=request.user.username)
+        user_id = user.id
         profile = Profile.objects.get(user_id=user_id).role
         broadcast_messages_count = BroadcastMessages.objects.filter(group_role=profile, claim=False).count()
         if profile == UserRoles.TASK_UPDATER.value:
