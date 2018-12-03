@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+<script>
+ setInterval(function () {document.getElementById("waitingButtonId").click();}, 1000);
+</script>
 <div class="chat">
     <h3>Waiting for a Mentor to join</h3>
 
@@ -9,7 +11,7 @@
         {% csrf_token %}
         <input type="hidden" name="thread_id" value={{ thread_id }}>
         <input type="hidden" name="broadcast_id" value={{ broadcast_id }}>
-        <p><input type="submit" value="Refresh"></p>
+        <p><input type="submit" value="Refresh" id="waitingButtonId" style="display:none"></p>
     </form>
 </div>
 
