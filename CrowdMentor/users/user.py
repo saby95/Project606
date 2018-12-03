@@ -95,7 +95,10 @@ def change_roles(request):
     for usr in users:
         prf = Profile.objects.get(user_id=usr.id)
         if prf.mentor_id is not None and prf.mentor_id > 0:
-            mentor = User.objects.get(id=prf.mentor_id)
+            try:
+                mentor = User.objects.get(id=prf.mentor_id)
+            except User.DoesNotExist:
+                mentor = 'None'
             user_dict[usr.id] = [usr.username, usr.email, prf.role, prf.salary, prf.bonus, prf.fine,
                                  prf.audit_prob_user, prf.mentor_id]
             user_dict_html[usr.id] = [usr.username, prf.role, i, i + 1, i + 2, i + 3, i + 4, i+5, mentor]
