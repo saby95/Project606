@@ -19,16 +19,16 @@ $(document).ready(function() {
 <div class="container">
     <div class="chat">
 
-        <div class="card bg-primary my-3">
-            <div class="card-body">
-                <a style="color:black;">Conversation with <b><h1>{{ partner.username }}</h1></b></a>
+        <div class="card my-3 bg-dark">
+            <div class="card-body bg-primary">
+                <a class= "text-light" style="color:black;">Conversation with <b><h1>{{ partner.username }}</h1></b></a>
             </div>
         </div>
 
         <div class="conversation">
 
             {% for message in thread_messages reversed %}
-                <div class="message card w-75 my-1 {% if message.sender == user %} float-right {% else %} float-left {% endif %}">
+                <div class="message card w-75 my-1 {% if message.sender == user %} float-right {% else %} float-left {% endif %} bg-dark">
                     <div class="card-body {% if message.sender == user %} bg-light {% else %} bg-dark {% endif %}"><p class="message {% if message.sender == user %} text-dark {% else %} text-light {% endif %}">{{ message.text|linebreaksbr }}</p></div>
                 </div>
             {% endfor %}
