@@ -19,6 +19,18 @@
       <!--  <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
     -->
   </head>
+  <script type="text/javascript">
+    var xhttp = new XMLHttpRequest();
+    setInterval(function () {
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              document.getElementById("navBroadcast").innerHTML = 'Broadcast('+this.responseText+')';
+            }
+        };
+        xhttp.open("GET", "/broadcast/broadcast_count", true);
+        xhttp.send();
+    }, 5000);
+    </script>
 
   <nav class="navbar navbar-expand-md navbar-dark bg-dark above-nav">
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
@@ -31,6 +43,11 @@
                 <a class="nav-link" href="{{ key }}">{{ value }}</a>
             </li>
           {% endfor %}
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a id="navBroadcast" class="nav-link" href="/broadcast">{{ broadcast_count }}</a>
+            </li>
+            {% endif %}
 
         </ul>
     </div>

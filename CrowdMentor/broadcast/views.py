@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, HttpResponse
 from .models import BroadcastMessages
 from privatemessages.models import Thread
 
@@ -33,3 +33,8 @@ def claim(request, broadcast_id, thread_id):
     thread.save()
 
     return redirect('chat_view', thread_id=thread_id)
+
+@login_required
+def broadcast_count(request):
+    cnt = BroadcastMessages.objects.filter(group_role=request.user.profile.role, claim=False).count()
+    return HttpResponse(cnt, content_type="text/plain")
