@@ -43,9 +43,11 @@
                 <a class="nav-link" href="{{ key }}">{{ value }}</a>
             </li>
           {% endfor %}
+            {% if user.is_authenticated %}
             <li class="nav-item">
                 <a id="navBroadcast" class="nav-link" href="/broadcast">{{ broadcast_count }}</a>
             </li>
+            {% endif %}
 
         </ul>
     </div>
