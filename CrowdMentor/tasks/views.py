@@ -45,7 +45,7 @@ def add_tasks(request):
 @login_required
 def detail(request, task_id):
     user = User.objects.get(username=request.user.username)
-    claim_permission = user.profile.role == 'worker'
+    claim_permission = user.profile.role == 'worker' or user.profile.role == 'virtual_worker'
     try:
         task = ResearchTasks.objects.get(pk=task_id)
     except ResearchTasks.DoesNotExist:
@@ -81,7 +81,7 @@ def claim(request, task_id):
 def claimed_tasks(request):
     user = User.objects.get(username=request.user.username)
     profile = user.profile.role
-    if profile != 'worker':
+    if profile != 'worker' and profile != 'virtual_worker':
         messages.warning(request, 'Permission Denied!! You do not have permission to access this page')
         return HttpResponseRedirect('/')
     tuj_list =TaskUserJunction.objects.filter(worker_id = user)
